@@ -4,23 +4,24 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Marquis AI — Intelligence artificielle pour entreprises québécoises</title>
-<meta name="description" content="Studio d'intelligence artificielle basé à Montréal. Agent vocal IA, SEO/GEO, LLM interne sécurisé pour les entreprises du Québec." />
+<meta name="description" content="Studio d'IA montréalais. Agent vocal, Optimisation pour moteurs génératifs (GEO), et LLM interne sécurisé." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Inter:wght@400;500&family=IBM+Plex+Mono:wght@500&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" />
 <style>
 :root {
-  --bg: #000000;
-  --deep-black: #0a0a0a;
-  --card: #1a1a1a;
-  --text: #ffffff;
-  --text-soft: rgba(255,255,255,0.6);
-  --text-mute: rgba(255,255,255,0.3);
-  --line: rgba(255,255,255,0.2);
-  --highlight: #ea0000;
-  --ease-quiet: cubic-bezier(.22, 1, .36, 1);
-  --ease-precise: cubic-bezier(.4, 0, .2, 1);
-  --ease-emphasis: cubic-bezier(.16, 1, .3, 1);
+  --bg: #F5F5F7;
+  --bg-dark: #0A0A0A;
+  --bg-card: #FFFFFF;
+  --text: #111111;
+  --text-light: #F5F5F7;
+  --text-secondary: #555555;
+  --text-muted: #888888;
+  --border: #E0E0E0;
+  --accent: #E31937; /* Rouge dynamique mais professionnel */
+  --accent-hover: #C41530;
+  --accent-dark-bg: #FF2D4B;
+  --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,1245 +33,587 @@ body {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   line-height: 1.6;
-  overflow-x: hidden;
-  cursor: none;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-a, button, input, textarea, select { cursor: none; color: inherit; text-decoration: none; font-family: inherit; }
-::selection { background: var(--highlight); color: #fff; }
+a { color: inherit; text-decoration: none; transition: color var(--transition); cursor: pointer; }
+img { max-width: 100%; display: block; }
+::selection { background: var(--accent); color: #fff; }
 
-/* Custom cursor */
-#custom-cursor {
-  position: fixed; top: 0; left: 0; width: 12px; height: 12px;
-  border-radius: 50%; background: #fff; mix-blend-mode: difference;
-  pointer-events: none; z-index: 9999; will-change: transform;
-  transition: width .3s ease, height .3s ease, opacity .3s ease;
-}
-@media (hover: none), (pointer: coarse) {
-  #custom-cursor { display: none !important; }
-  body, a, button, input, textarea, select { cursor: auto; }
-}
+/* --- Layout --- */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
 
-#particle-canvas {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  z-index: 0; pointer-events: none;
-}
+/* --- Typography --- */
+h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
+h1 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 2rem; }
+h2 { font-size: clamp(2rem, 4vw, 3.2rem); margin-bottom: 1.5rem; }
+h3 { font-size: 1.4rem; margin-bottom: 1rem; }
+p { color: var(--text-secondary); margin-bottom: 1.25rem; }
+.mono { font-family: 'Inter', monospace; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); }
 
-.scroll-progress {
-  position: fixed; top: 0; left: 0; height: 2px; width: 0%;
-  background: var(--highlight); z-index: 100;
-  box-shadow: 0 0 16px rgba(234,0,0,0.6);
+/* --- Buttons --- */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 1rem 2rem; border-radius: 0px; font-size: 0.9rem; font-weight: 600;
+  transition: all var(--transition); border: 2px solid transparent; cursor: pointer;
+  font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 0.05em;
 }
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(227, 25, 55, 0.25); }
+.btn-secondary { background: transparent; color: var(--text); border-color: var(--text); }
+.btn-secondary:hover { background: var(--text); color: var(--bg); }
 
-/* Nav */
+/* --- Nav --- */
 .nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-  padding: 1.5rem 2rem;
-  display: flex; justify-content: space-between; align-items: center;
-  background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(245, 245, 247, 0.9); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  transition: background var(--transition), border-color var(--transition);
 }
-.nav-logo {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 900;
-  font-size: 1.05rem;
-  letter-spacing: -0.02em;
-  display: flex; align-items: center; gap: 0.6rem;
-}
-.nav-logo .dot {
-  width: 7px; height: 7px; background: var(--highlight); border-radius: 50%;
-  box-shadow: 0 0 10px var(--highlight);
-}
-.nav-links {
-  display: flex; gap: 2.5rem;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-}
-.nav-links a {
-  color: var(--text-soft);
-  transition: color 0.3s var(--ease-quiet);
-  position: relative;
-  padding-bottom: 4px;
-}
-.nav-links a:hover { color: var(--text); }
-.nav-links a::after {
-  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-  height: 1px; background: var(--highlight); transform: scaleX(0);
-  transform-origin: left; transition: transform 0.4s var(--ease-quiet);
-}
-.nav-links a:hover::after { transform: scaleX(1); }
-.nav-cta {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  padding: 0.75rem 1.4rem;
-  border: 1px solid var(--line);
-  transition: all 0.4s var(--ease-quiet);
-}
-.nav-cta:hover {
-  background: var(--highlight);
-  border-color: var(--highlight);
-  color: #fff;
-}
+.nav.dark-mode { background: rgba(10, 10, 10, 0.95); border-color: rgba(255,255,255,0.1); }
+.nav.dark-mode .nav-links a, .nav.dark-mode .nav-logo { color: var(--text-light); }
+.nav.dark-mode .nav-links a:hover, .nav.dark-mode .nav-links a.active { color: var(--accent-dark-bg); }
 
-/* Hero */
-.hero {
-  position: relative; min-height: 100vh;
-  display: flex; flex-direction: column; justify-content: center;
-  padding: 8rem 2rem 4rem;
-  z-index: 2;
-}
-.hero-meta {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  color: var(--text-mute);
-  margin-bottom: 2rem;
-  display: flex; gap: 1.5rem; align-items: center;
-}
-.hero-meta::before {
-  content: ''; width: 60px; height: 1px; background: var(--highlight);
-}
-.hero-title {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 900;
-  font-size: clamp(4rem, 14vw, 13rem);
-  line-height: 0.85;
-  letter-spacing: -0.045em;
-  margin-bottom: 3rem;
-  max-width: 1400px;
-}
-.hero-title .accent { color: var(--highlight); }
-.hero-typewriter {
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  font-size: clamp(1rem, 1.4vw, 1.2rem);
-  line-height: 1.55;
-  color: var(--text-soft);
-  max-width: 620px;
-  min-height: 7rem;
-  white-space: pre-wrap;
-}
-.caret {
-  display: inline-block; width: 8px; height: 1.05em;
-  background: var(--highlight); vertical-align: text-bottom;
-  margin-left: 2px;
-  transition: opacity 0.15s;
-}
-.caret.is-hidden { opacity: 0; }
-.hero-cta-wrap {
-  margin-top: 3rem; opacity: 0; transform: translateY(20px);
-  transition: opacity 0.8s var(--ease-quiet), transform 0.8s var(--ease-quiet);
-  display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;
-}
-.hero-cta-wrap.is-shown { opacity: 1; transform: translateY(0); }
-.hero-cta-primary {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  padding: 1.1rem 2rem;
-  background: var(--highlight);
-  border: 1px solid var(--highlight);
-  display: inline-flex; align-items: center; gap: 0.8rem;
-  transition: all 0.4s var(--ease-quiet);
-  color: #fff;
-}
-.hero-cta-primary:hover {
-  background: transparent;
-  letter-spacing: 0.22em;
-}
-.hero-cta-secondary {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: var(--text-soft);
-  transition: color 0.3s var(--ease-quiet);
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 0.4rem;
-}
-.hero-cta-secondary:hover { color: var(--text); border-bottom-color: var(--highlight); }
-.hero-scroll-hint {
-  position: absolute; bottom: 2rem; right: 2rem;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.28em;
-  color: var(--text-mute);
-  display: flex; flex-direction: column; align-items: center; gap: 1rem;
-  writing-mode: vertical-rl;
-}
-.hero-scroll-hint::after {
-  content: ''; width: 1px; height: 60px;
-  background: linear-gradient(180deg, var(--text-mute), transparent);
-  animation: scrollHint 2s var(--ease-quiet) infinite;
-}
-@keyframes scrollHint {
-  0% { transform: scaleY(0); transform-origin: top; }
-  50% { transform: scaleY(1); transform-origin: top; }
-  51% { transform-origin: bottom; }
-  100% { transform: scaleY(0); transform-origin: bottom; }
-}
+.nav-inner { display: flex; justify-content: space-between; align-items: center; height: 72px; }
+.nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; display: flex; align-items: center; gap: 0.5rem; color: var(--text); }
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 2.5rem; }
+.nav-links a { font-size: 0.9rem; color: var(--text-secondary); font-weight: 500; position: relative; }
+.nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--accent); transition: width var(--transition); }
+.nav-links a:hover, .nav-links a.active { color: var(--text); }
+.nav-links a.active::after, .nav-links a:hover::after { width: 100%; }
+.nav-cta { margin-left: 1rem; }
 
-/* Section base */
-section { position: relative; z-index: 2; padding: 8rem 2rem; }
-.container { max-width: 1400px; margin: 0 auto; }
-.container-prose { max-width: 880px; margin: 0 auto; }
+/* --- Page System --- */
+.page { display: none; opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; padding-top: 72px; min-height: 100vh; }
+.page.active { display: block; }
+.page.visible { opacity: 1; transform: translateY(0); }
 
-.section-label {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.25em;
-  color: var(--text-mute);
-  margin-bottom: 2rem;
-  display: flex; align-items: center; gap: 1rem;
-}
-.section-label::before {
-  content: ''; width: 40px; height: 1px; background: var(--highlight);
-}
-.section-headline {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 900;
-  font-size: clamp(2.5rem, 5.5vw, 5rem);
-  line-height: 0.9;
-  letter-spacing: -0.035em;
-  margin-bottom: 4rem;
-}
-.section-headline .accent { color: var(--highlight); }
+/* --- Home Page --- */
+.hero { padding: 10rem 0 6rem; background: var(--bg-dark); color: var(--text-light); position: relative; overflow: hidden; margin-top: -72px; padding-top: calc(72px + 6rem); }
+.hero::before { content: ''; position: absolute; top: -50%; right: -20%; width: 800px; height: 800px; background: radial-gradient(circle, rgba(227,25,55,0.15) 0%, transparent 70%); pointer-events: none; }
+.hero h1 { max-width: 900px; }
+.hero h1 .accent { color: var(--accent-dark-bg); }
+.hero-sub { font-size: 1.2rem; max-width: 600px; color: rgba(255,255,255,0.7); margin-bottom: 3rem; line-height: 1.7; }
+.hero .btn-secondary { color: var(--text-light); border-color: rgba(255,255,255,0.3); }
+.hero .btn-secondary:hover { background: var(--text-light); color: var(--bg-dark); }
 
-/* Marquee */
-.marquee {
-  padding: 2.5rem 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  overflow: hidden;
-  white-space: nowrap;
-  background: var(--bg);
-  position: relative; z-index: 2;
+.products-section { padding: 8rem 0; }
+.products-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; border-bottom: 2px solid var(--text); padding-bottom: 2rem; }
+.products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+.product-card {
+  background: var(--bg-card); border: 1px solid var(--border); 
+  padding: 3rem 2.5rem; transition: all var(--transition); display: flex; flex-direction: column; position: relative;
 }
-.marquee-track {
-  display: inline-flex;
-  gap: 3.5rem;
-  animation: marquee 38s linear infinite;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 900;
-  font-size: clamp(1.75rem, 3vw, 2.75rem);
-  letter-spacing: -0.02em;
-  line-height: 1;
-  padding-right: 3.5rem;
-}
-.marquee-track span { color: var(--text); }
-.marquee-track .accent { color: var(--highlight); }
-.marquee-track .sep { color: var(--text-mute); font-weight: 400; }
-@keyframes marquee { to { transform: translateX(-50%); } }
+.product-card:hover { background: var(--bg-dark); color: var(--text-light); z-index: 2; transform: scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+.product-card:hover .card-num { color: var(--accent-dark-bg); }
+.product-card:hover .card-link { color: var(--accent-dark-bg); }
+.product-card:hover p { color: rgba(255,255,255,0.6); }
+.card-num { font-family: 'Space Grotesk', sans-serif; font-size: 4rem; font-weight: 700; color: var(--border); margin-bottom: 2rem; line-height: 1; transition: color var(--transition); }
+.card-body { flex: 1; }
+.card-link { margin-top: 2.5rem; font-size: 0.9rem; font-weight: 600; color: var(--accent); display: inline-flex; align-items: center; gap: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; transition: all var(--transition); }
+.card-link:hover { gap: 1rem; }
 
-/* Manifesto */
-.manifesto { padding: 10rem 2rem; }
-.manifesto-text {
-  font-family: 'Inter', sans-serif;
-  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
-  line-height: 1.45;
-  font-weight: 400;
-  color: var(--text);
-}
-.manifesto-text p { margin-bottom: 2rem; }
-.manifesto-text .soft { color: var(--text-soft); }
-.manifesto-stats {
-  margin-top: 6rem;
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-  padding-top: 4rem;
-  border-top: 1px solid var(--line);
-}
-.stat-item { display: flex; flex-direction: column; }
-.stat-num {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 900;
-  font-size: clamp(2.2rem, 3.5vw, 3.2rem);
-  letter-spacing: -0.035em;
-  line-height: 1;
-  margin-bottom: 0.75rem;
-}
-.stat-num .accent { color: var(--highlight); }
-.stat-label {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--text-mute);
-}
+.trust-strip { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-card); }
+.trust-item { padding: 3rem 2rem; border-right: 1px solid var(--border); text-align: center; }
+.trust-item:last-child { border-right: none; }
+.trust-num { font-family: 'Space Grotesk', sans-serif; font-size: 3rem; font-weight: 700; color: var(--text); display: block; line-height: 1; margin-bottom: 0.5rem; }
+.trust-num span { color: var(--accent); }
+.trust-label { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;}
 
-/* Products */
-.products { padding: 8rem 2rem; }
-.product-block {
-  display: grid; grid-template-columns: 1fr 1.05fr;
-  gap: 5rem;
-  padding: 7rem 0;
-  border-top: 1px solid var(--line);
-  align-items: start;
-}
-.product-block:last-child { border-bottom: 1px solid var(--line); }
-.product-num {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: var(--highlight);
-  margin-bottom: 1.5rem;
-}
-.product-title {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 900;
-  font-size: clamp(2rem, 3.8vw, 3.2rem);
-  letter-spacing: -0.035em;
-  line-height: 0.95;
-  margin-bottom: 1.75rem;
-}
-.product-tagline {
-  font-family: 'Inter', sans-serif;
-  font-style: italic;
-  font-size: 1.1rem;
-  color: var(--text-soft);
-  margin-bottom: 2.5rem;
-  padding-left: 1rem;
-  border-left: 2px solid var(--highlight);
-  line-height: 1.5;
-}
-.product-body p {
-  font-size: 0.98rem;
-  line-height: 1.75;
-  color: var(--text-soft);
-  margin-bottom: 1.25rem;
-}
-.product-body p strong { color: var(--text); font-weight: 500; }
-.product-features {
-  margin-top: 2.5rem;
-  list-style: none;
-}
-.product-features li {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  padding: 1rem 0;
-  border-top: 1px solid var(--line);
-  display: flex; align-items: center;
-}
-.product-features li:last-child { border-bottom: 1px solid var(--line); }
-.product-features li::before {
-  content: '+';
-  color: var(--highlight);
-  margin-right: 1rem;
-  font-size: 1rem;
-}
+/* --- Product Pages --- */
+.prod-hero { padding: 6rem 0 5rem; background: var(--bg-dark); color: var(--text-light); margin-top: -72px; padding-top: calc(72px + 4rem); position: relative; }
+.prod-hero::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 150px; background: linear-gradient(to top, var(--bg), transparent); pointer-events: none; z-index: 1;}
+.prod-hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; position: relative; z-index: 2; }
+.prod-hero h1 { margin-bottom: 1.5rem; }
+.prod-hero p { color: rgba(255,255,255,0.7); font-size: 1.1rem; }
+.prod-hero .btn-primary { margin-top: 2rem; }
 
-.product-visual {
-  position: relative;
-  aspect-ratio: 4/5;
-  overflow: hidden;
-  background: var(--deep-black);
-}
-.product-visual-img {
-  position: absolute; inset: 0;
-  background-size: cover;
-  background-position: center;
-  filter: grayscale(0.7) contrast(1.05) brightness(0.65);
-  transform: translateY(calc(var(--parallax, 0) * 18px)) scale(1.12);
-  transition: filter 0.8s var(--ease-quiet), transform 1.2s var(--ease-quiet);
-  will-change: transform;
-}
-.product-visual:hover .product-visual-img {
-  filter: grayscale(0.4) contrast(1.1) brightness(0.8);
-}
-.product-visual-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.75) 100%);
-  pointer-events: none;
-}
-.product-visual-scanlines {
-  position: absolute; inset: 0;
-  background-image: repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(0,0,0,0.12) 2px, rgba(0,0,0,0.12) 3px);
-  pointer-events: none;
-  mix-blend-mode: multiply;
-}
-.product-visual-corner {
-  position: absolute; top: 0; right: 0;
-  width: 80px; height: 80px;
-  pointer-events: none;
-}
-.product-visual-corner::before, .product-visual-corner::after {
-  content: ''; position: absolute; background: var(--highlight);
-}
-.product-visual-corner::before { top: 0; right: 0; width: 80px; height: 3px; }
-.product-visual-corner::after { top: 0; right: 0; width: 3px; height: 80px; }
-.product-visual-label {
-  position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: var(--text);
-  display: flex; justify-content: space-between;
-  z-index: 2;
-}
-.product-visual-label span:last-child { color: var(--text-soft); }
+.prod-content { padding: 6rem 0; }
+.details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; }
+.detail-block { margin-bottom: 4rem; }
+.detail-block h3 { font-size: 1.6rem; color: var(--text); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
+.detail-block h3::before { content: ''; display: block; width: 40px; height: 4px; background: var(--accent); flex-shrink: 0; }
 
-/* Process */
-.process { background: var(--deep-black); padding: 8rem 2rem; }
-.process-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
-  margin-top: 4rem;
-  border-top: 1px solid var(--line);
-  border-left: 1px solid var(--line);
-}
-.process-step {
-  padding: 3rem 2rem;
-  border-right: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  display: flex; flex-direction: column;
-  min-height: 300px;
-  position: relative;
-  transition: background 0.5s var(--ease-quiet);
-}
-.process-step:hover { background: rgba(234,0,0,0.04); }
-.process-step-num {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 900;
-  font-size: 3.5rem;
-  letter-spacing: -0.04em;
-  color: var(--highlight);
-  margin-bottom: 2rem;
-  line-height: 1;
-}
-.process-step-title {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 800;
-  font-size: 1.1rem;
-  letter-spacing: -0.02em;
-  margin-bottom: 1rem;
-  text-transform: uppercase;
-}
-.process-step-desc {
-  font-size: 0.88rem;
-  color: var(--text-soft);
-  line-height: 1.55;
-  margin-top: auto;
-}
+.feature-list { list-style: none; margin-top: 2rem; background: var(--bg-card); border: 1px solid var(--border); padding: 0; }
+.feature-list li { padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 1.25rem; font-size: 0.95rem; color: var(--text-secondary); transition: background var(--transition); }
+.feature-list li:last-child { border-bottom: none; }
+.feature-list li:hover { background: #fafafa; }
+.feature-list li strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 0.2rem; }
+.check { color: var(--accent); font-weight: 800; font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
 
-/* Sectors strip */
-.sectors { padding: 6rem 2rem; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.sectors-grid {
-  display: grid; grid-template-columns: repeat(6, 1fr);
-  gap: 0;
-  margin-top: 3rem;
-  border-top: 1px solid var(--line);
-  border-left: 1px solid var(--line);
-}
-.sector-item {
-  padding: 2rem 1.5rem;
-  border-right: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--text-soft);
-  text-align: center;
-  transition: color 0.3s var(--ease-quiet), background 0.3s var(--ease-quiet);
-}
-.sector-item:hover { color: var(--text); background: rgba(255,255,255,0.02); }
+/* --- Contact Page --- */
+.contact-section { padding: 6rem 0 10rem; }
+.contact-grid { display: grid; grid-template-columns: 5fr 7fr; gap: 6rem; }
+.contact-info-item { margin-bottom: 3rem; }
+.contact-info-item label { display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 600; }
+.contact-info-item p { color: var(--text); margin: 0; font-size: 1.1rem; font-weight: 500; line-height: 1.5; }
 
-/* Quote */
-.quote { padding: 10rem 2rem; }
-.quote-mark {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 900;
-  font-size: 7rem;
-  line-height: 0.5;
-  color: var(--highlight);
-  margin-bottom: 2rem;
-}
-.quote-text {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 800;
-  font-size: clamp(1.6rem, 3.2vw, 2.8rem);
-  line-height: 1.15;
-  letter-spacing: -0.025em;
-  max-width: 1100px;
-  margin-bottom: 3rem;
-}
-.quote-author {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  color: var(--text-soft);
-  display: flex; align-items: center; gap: 1rem;
-}
-.quote-author::before {
-  content: ''; width: 30px; height: 1px; background: var(--text-mute);
-}
+.form-card { background: var(--bg-card); border: 1px solid var(--border); padding: 3rem; box-shadow: 0 10px 40px rgba(0,0,0,0.03); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.form-group { margin-bottom: 1.5rem; }
+.form-group.full { grid-column: 1 / -1; }
+.form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text); }
+.form-control { width: 100%; padding: 1rem; border: 1px solid var(--border); border-radius: 0px; font-family: inherit; font-size: 0.95rem; background: var(--bg); color: var(--text); transition: border-color var(--transition), box-shadow var(--transition); outline: none; }
+.form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(227, 25, 55, 0.1); }
+textarea.form-control { resize: vertical; min-height: 120px; }
+select.form-control { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23888' d='M6 8L0 0h12z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; }
 
-/* Contact */
-.contact { padding: 9rem 2rem; border-top: 1px solid var(--line); }
-.contact-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: 5rem;
-  align-items: start;
-  margin-top: 3rem;
-}
-.contact-info { position: sticky; top: 8rem; }
-.contact-intro {
-  font-size: 1.05rem;
-  color: var(--text-soft);
-  line-height: 1.65;
-  margin-bottom: 3rem;
-  max-width: 480px;
-}
-.contact-info-item {
-  padding: 1.75rem 0;
-  border-bottom: 1px solid var(--line);
-}
-.contact-info-item:first-of-type { border-top: 1px solid var(--line); }
-.contact-info-label {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.25em;
-  color: var(--text-mute);
-  margin-bottom: 0.65rem;
-}
-.contact-info-value {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.05rem;
-  color: var(--text);
-  line-height: 1.5;
-}
-.contact-form {
-  display: flex; flex-direction: column;
-  gap: 2rem;
-}
-.form-row {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
-}
-.form-field {
-  display: flex; flex-direction: column;
-}
-.form-field label {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.25em;
-  color: var(--text-mute);
-  margin-bottom: 0.75rem;
-}
-.form-field input, .form-field textarea, .form-field select {
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid var(--line);
-  color: var(--text);
-  font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  padding: 0.75rem 0;
-  outline: none;
-  transition: border-color 0.3s var(--ease-quiet);
-  width: 100%;
-}
-.form-field input::placeholder, .form-field textarea::placeholder { color: var(--text-mute); }
-.form-field input:focus, .form-field textarea:focus, .form-field select:focus {
-  border-bottom-color: var(--highlight);
-}
-.form-field textarea {
-  resize: vertical; min-height: 100px;
-}
-.form-field select {
-  appearance: none;
-  -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23ffffff' fill-opacity='0.4' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.5rem center;
-  padding-right: 2rem;
-}
-.form-field select option { background: var(--card); color: var(--text); }
-.form-submit {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  padding: 1.2rem 2rem;
-  background: var(--highlight);
-  border: 1px solid var(--highlight);
-  color: #fff;
-  align-self: flex-start;
-  margin-top: 1rem;
-  transition: all 0.4s var(--ease-quiet);
-  display: inline-flex; align-items: center; gap: 0.8rem;
-}
-.form-submit:hover { background: transparent; }
-.form-submit:disabled { opacity: 0.6; }
+/* --- Footer --- */
+.footer { background: var(--bg-dark); color: var(--text-light); padding: 6rem 0 3rem; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
+.footer p { color: rgba(255,255,255,0.5); font-size: 0.95rem; line-height: 1.7; }
+.footer h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 2rem; color: rgba(255,255,255,0.3); font-family: 'Inter', sans-serif; font-weight: 600;}
+.footer ul { list-style: none; }
+.footer ul li { margin-bottom: 1rem; }
+.footer ul a { color: rgba(255,255,255,0.6); font-size: 0.95rem; transition: color var(--transition); }
+.footer ul a:hover { color: #fff; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 3rem; display: flex; justify-content: space-between; font-size: 0.8rem; color: rgba(255,255,255,0.3); }
 
-/* Footer */
-footer {
-  padding: 4rem 2rem 2rem;
-  border-top: 1px solid var(--line);
-  position: relative; z-index: 2;
-  background: var(--bg);
-}
-.footer-top {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 4rem;
-  padding-bottom: 4rem;
-  border-bottom: 1px solid var(--line);
-}
-.footer-logo {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 900;
-  font-size: 1.75rem;
-  letter-spacing: -0.03em;
-  margin-bottom: 1rem;
-}
-.footer-logo .accent { color: var(--highlight); }
-.footer-tagline {
-  font-size: 0.9rem;
-  color: var(--text-soft);
-  max-width: 320px;
-  line-height: 1.6;
-}
-.footer-col-title {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.25em;
-  color: var(--text-mute);
-  margin-bottom: 1.5rem;
-}
-.footer-col ul { list-style: none; }
-.footer-col li { margin-bottom: 0.75rem; }
-.footer-col a {
-  font-size: 0.9rem;
-  color: var(--text-soft);
-  transition: color 0.3s var(--ease-quiet);
-}
-.footer-col a:hover { color: var(--highlight); }
-.footer-bottom {
-  padding-top: 2rem;
-  display: flex; justify-content: space-between; align-items: center;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--text-mute);
-}
-
-/* Reveal */
-.reveal {
-  opacity: 0; transform: translateY(40px);
-  transition: opacity 1s var(--ease-quiet), transform 1s var(--ease-quiet);
-}
-.reveal.is-in { opacity: 1; transform: translateY(0); }
-.reveal.delay-1 { transition-delay: 0.12s; }
-.reveal.delay-2 { transition-delay: 0.24s; }
-.reveal.delay-3 { transition-delay: 0.36s; }
-
-/* Responsive */
+/* --- Responsive --- */
 @media (max-width: 900px) {
-  .nav { padding: 1.2rem 1.5rem; }
   .nav-links { display: none; }
-  .nav-cta { padding: 0.6rem 1rem; font-size: 0.65rem; }
-  .hero { padding: 6rem 1.5rem 4rem; }
-  .hero-scroll-hint { display: none; }
-  section { padding: 5rem 1.5rem; }
-  .manifesto { padding: 6rem 1.5rem; }
-  .manifesto-stats { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
-  .product-block { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 0; }
-  .process-grid { grid-template-columns: 1fr 1fr; }
-  .process-step { min-height: 240px; padding: 2rem 1.5rem; }
-  .sectors-grid { grid-template-columns: repeat(3, 1fr); }
-  .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
-  .contact-info { position: static; }
-  .form-row { grid-template-columns: 1fr; gap: 1.5rem; }
-  .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
-  .footer-bottom { flex-direction: column; gap: 1rem; align-items: flex-start; }
-  .quote { padding: 6rem 1.5rem; }
-  .quote-mark { font-size: 5rem; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
-  .marquee-track { animation: none; }
+  .products-grid { grid-template-columns: 1fr; }
+  .product-card:hover { transform: none; }
+  .trust-strip { grid-template-columns: 1fr 1fr; }
+  .trust-item { border-bottom: 1px solid var(--border); }
+  .prod-hero-grid, .details-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; gap: 1rem; }
+  .form-row { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 
-<div id="custom-cursor"></div>
-<div class="scroll-progress" id="scrollProgress"></div>
-<canvas id="particle-canvas"></canvas>
-
-<nav class="nav">
-  <a href="#" class="nav-logo"><span class="dot"></span>MARQUIS AI</a>
-  <div class="nav-links">
-    <a href="#manifeste">Manifeste</a>
-    <a href="#produits">Produits</a>
-    <a href="#methode">Méthode</a>
-    <a href="#contact">Contact</a>
+<!-- Navigation -->
+<nav class="nav" id="mainNav">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo" data-page="home">Marquis<span>.</span></a>
+    <div class="nav-links">
+      <a href="#" data-page="home" class="active">Accueil</a>
+      <a href="#" data-page="voice">Agent Vocal</a>
+      <a href="#" data-page="geo">GEO</a>
+      <a href="#" data-page="llm">LLM Interne</a>
+    </div>
+    <a href="#" data-page="contact" class="btn btn-primary nav-cta">Démo gratuite</a>
   </div>
-  <a href="#contact" class="nav-cta">Réserver une démo</a>
 </nav>
 
-<section class="hero">
-  <div class="hero-meta">STUDIO D'IA · MONTRÉAL · ÉDITION 2025</div>
-  <h1 class="hero-title">Marquis <span class="accent">AI</span></h1>
-  <div class="hero-typewriter">
-    <span id="typewriter-text"></span><span class="caret" id="caret"></span>
-  </div>
-  <div class="hero-cta-wrap" id="heroCta">
-    <a href="#produits" class="hero-cta-primary">Voir les produits <span>→</span></a>
-    <a href="#contact" class="hero-cta-secondary">Réserver une démo</a>
-  </div>
-  <div class="hero-scroll-hint">Défiler</div>
-</section>
+<!-- ========================================== -->
+<!-- PAGE: HOME -->
+<!-- ========================================== -->
+<div id="page-home" class="page active visible">
+  <section class="hero">
+    <div class="container">
+      <p class="mono" style="margin-bottom: 2rem;">Studio d'IA · Montréal · 2025</p>
+      <h1>L'IA qui travaille <br><span class="accent">pour votre entreprise.</span></h1>
+      <p class="hero-sub">Nous concevons des systèmes d'intelligence artificielle qui répondent à vos clients, optimisent votre visibilité dans les moteurs IA, et sécurisent vos données. Sans jargon, sans retard.</p>
+      <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+        <a href="#" data-page="contact" class="btn btn-primary">Démarrer un projet</a>
+        <a href="#produits-acc" class="btn btn-secondary">Découvrir les produits</a>
+      </div>
+    </div>
+  </section>
 
-<div class="marquee">
-  <div class="marquee-track">
-    <span>AGENT VOCAL</span><span class="sep">·</span>
-    <span class="accent">SEO / GÉO</span><span class="sep">·</span>
-    <span>LLM INTERNE</span><span class="sep">·</span>
-    <span>MARQUIS AI</span><span class="sep">·</span>
-    <span>MONTRÉAL</span><span class="sep">·</span>
-    <span>AGENT VOCAL</span><span class="sep">·</span>
-    <span class="accent">SEO / GÉO</span><span class="sep">·</span>
-    <span>LLM INTERNE</span><span class="sep">·</span>
-    <span>MARQUIS AI</span><span class="sep">·</span>
-    <span>MONTRÉAL</span><span class="sep">·</span>
+  <section class="products-section" id="produits-acc">
+    <div class="container">
+      <div class="products-header">
+        <div>
+          <p class="mono" style="margin-bottom: 1rem;">Nos produits</p>
+          <h2>Trois solutions.<br>Zéro compromis.</h2>
+        </div>
+      </div>
+      
+      <div class="products-grid">
+        <div class="product-card">
+          <div class="card-num">01</div>
+          <div class="card-body">
+            <h3>Agent Vocal IA</h3>
+            <p>Un standard téléphonique qui répond 24/7, prend les réservations et qualifie les leads sans aucune intervention humaine.</p>
+            <a href="#" data-page="voice" class="card-link">Voir le produit →</a>
+          </div>
+        </div>
+        
+        <div class="product-card">
+          <div class="card-num">02</div>
+          <div class="card-body">
+            <h3>GEO (Génération Engine Opt.)</h3>
+            <p>Soyez cité par ChatGPT, Perplexity et Google AI. Le référencement de la nouvelle génération de moteurs de recherche.</p>
+            <a href="#" data-page="geo" class="card-link">Voir le produit →</a>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="card-num">03</div>
+          <div class="card-body">
+            <h3>LLM Interne Sécurisé</h3>
+            <p>Un ChatGPT privé hébergé chez vous. Vos employés utilisent l'IA sans que vos données confidentielles ne quittent vos serveurs.</p>
+            <a href="#" data-page="llm" class="card-link">Voir le produit →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="trust-strip">
+    <div class="trust-item"><span class="trust-num">24<span>/</span>7</span><span class="trust-label">Disponibilité</span></div>
+    <div class="trust-item"><span class="trust-num">100<span>%</span></span><span class="trust-label">Données au Québec</span></div>
+    <div class="trust-item"><span class="trust-num">&lt;2<span>s</span></span><span class="trust-label">Temps de réponse</span></div>
+    <div class="trust-item"><span class="trust-num">0</span><span class="trust-label">Ligne de code à écrire</span></div>
   </div>
 </div>
 
-<section class="manifesto" id="manifeste">
-  <div class="container-prose">
-    <div class="section-label reveal">Manifeste</div>
-    <div class="manifesto-text">
-      <p class="reveal">Nous croyons que l'intelligence artificielle devrait <span class="soft">disparaître derrière l'efficacité qu'elle apporte.</span> Un client qui appelle ne doit pas savoir qu'il parle à une machine — il doit seulement sentir qu'il a été compris, rapidement, poliment, correctement.</p>
-      <p class="reveal delay-1">Nous sommes français. Nous sommes basés à Montréal. Nous servons les entreprises du Québec — <span class="soft">restaurants, cliniques, cabinets d'avocats, entrepreneurs</span> — pour qui la technologie n'est pas une fin, mais un moyen de grandir sans grossir.</p>
-      <p class="reveal delay-2">Nos systèmes s'installent en jours, pas en mois. Ils s'intègrent à ce qui existe déjà. <span class="soft">Et quand rien n'existe, nous construisons.</span></p>
-    </div>
-    <div class="manifesto-stats">
-      <div class="stat-item reveal">
-        <div class="stat-num">24<span class="accent">/</span>7</div>
-        <div class="stat-label">Disponibilité continue</div>
-      </div>
-      <div class="stat-item reveal delay-1">
-        <div class="stat-num">03</div>
-        <div class="stat-label">Produits déployés</div>
-      </div>
-      <div class="stat-item reveal delay-2">
-        <div class="stat-num">100<span class="accent">%</span></div>
-        <div class="stat-label">Données au Québec</div>
-      </div>
-      <div class="stat-item reveal delay-3">
-        <div class="stat-num">&lt;2<span class="accent">s</span></div>
-        <div class="stat-label">Temps de réponse moyen</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="products" id="produits">
-  <div class="container">
-    <div class="section-label reveal">Produits</div>
-    <h2 class="section-headline reveal">Trois outils.<br><span class="accent">Une seule conversation.</span></h2>
-
-    <div class="product-block">
-      <div class="product-body reveal">
-        <div class="product-num">PRODUIT 01</div>
-        <h3 class="product-title">Agent Vocal IA</h3>
-        <p class="product-tagline">Un réceptionniste qui ne dort jamais, ne prend jamais de congé, et ne manque jamais une réservation.</p>
-        <p>Notre agent vocal répond à chaque appel entrant dans les trois premières secondes. Il prend les réservations, répond aux questions les plus fréquentes — horaires, adresse, services, prix — redirige les cas complexes vers un humain, et envoie automatiquement un SMS de confirmation puis un rappel 24 heures avant le rendez-vous.</p>
-        <p>Le système s'intègre à votre CRM existant — <strong>ou nous construisons un CRM sur mesure si vous n'en avez pas.</strong> Aucune installation de votre côté. Aucune ligne de code à apprendre.</p>
-        <ul class="product-features">
-          <li><span>Réponse en moins de 3 secondes</span></li>
-          <li><span>Prise de réservations en temps réel</span></li>
-          <li><span>SMS de confirmation et rappel automatique</span></li>
-          <li><span>Bilingue français / anglais</span></li>
-          <li><span>Intégration CRM native</span></li>
-          <li><span>Transfert vers humain en cas de besoin</span></li>
-        </ul>
-      </div>
-      <div class="product-visual reveal delay-1">
-        <div class="product-visual-img" style="background-image: url('https://picsum.photos/seed/marquis-voice-reception/800/1000');"></div>
-        <div class="product-visual-overlay"></div>
-        <div class="product-visual-scanlines"></div>
-        <div class="product-visual-corner"></div>
-        <div class="product-visual-label">
-          <span>FIG. 01 — SYSTÈME VOCAL</span>
-          <span>RÉPONSE TEMPS RÉEL</span>
+<!-- ========================================== -->
+<!-- PAGE: AGENT VOCAL -->
+<!-- ========================================== -->
+<div id="page-voice" class="page">
+  <section class="prod-hero">
+    <div class="container">
+      <div class="prod-hero-grid">
+        <div>
+          <p class="mono" style="margin-bottom: 1.5rem;">Produit 01</p>
+          <h1>Agent Vocal IA</h1>
+          <p>Un réceptionniste virtuel qui ne dort jamais, ne prend jamais de congé, et ne rate aucun appel entrant.</p>
+          <a href="#" data-page="contact" class="btn btn-primary">Demander une démo</a>
         </div>
       </div>
     </div>
+  </section>
 
-    <div class="product-block">
-      <div class="product-visual reveal">
-        <div class="product-visual-img" style="background-image: url('https://picsum.photos/seed/marquis-geo-montreal-map/800/1000');"></div>
-        <div class="product-visual-overlay"></div>
-        <div class="product-visual-scanlines"></div>
-        <div class="product-visual-corner"></div>
-        <div class="product-visual-label">
-          <span>FIG. 02 — POSITIONNEMENT</span>
-          <span>SEO / GÉO</span>
-        </div>
-      </div>
-      <div class="product-body reveal delay-1">
-        <div class="product-num">PRODUIT 02</div>
-        <h3 class="product-title">SEO / Géolocalisation</h3>
-        <p class="product-tagline">Être trouvé avant même d'être cherché — sur Google, sur Maps, dans la conversation locale.</p>
-        <p>Un site web invisible ne sert à rien. Notre service SEO/GEO optimise votre présence sur les moteurs de recherche et les cartes locales pour que les clients potentiels de votre région trouvent votre entreprise en premier.</p>
-        <p>Nous travaillons sur le fond — structure technique, contenu, balises, données structurées, fiches Google Business, citations locales — et non sur des astuces éphémères. <strong>Le positionnement gagné reste gagné.</strong></p>
-        <ul class="product-features">
-          <li><span>Audit technique complet</span></li>
-          <li><span>Optimisation Google Business Profile</span></li>
-          <li><span>Stratégie de contenu local</span></li>
-          <li><span>Suivi de positionnement mensuel</span></li>
-          <li><span>Concurrents analysés en continu</span></li>
-          <li><span>Rapports transparents</span></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="product-block">
-      <div class="product-body reveal">
-        <div class="product-num">PRODUIT 03</div>
-        <h3 class="product-title">LLM Interne</h3>
-        <p class="product-tagline">L'intelligence reste dans la maison. Vos données ne quittent jamais vos murs.</p>
-        <p>Pour les cabinets d'avocats, les cliniques, les entreprises qui manipulent des données sensibles, envoyer des informations à ChatGPT n'est pas une option. Nous déployons un modèle de langage interne, hébergé sur votre infrastructure, où aucune donnée ne sort jamais.</p>
-        <p>Vos collaborateurs peuvent interroger leurs documents, rédiger, résumer, rechercher — avec la même fluidité qu'un outil grand public, mais <strong>sans compromis sur la confidentialité.</strong></p>
-        <ul class="product-features">
-          <li><span>Hébergement sur votre infrastructure</span></li>
-          <li><span>Aucune donnée transmise à l'extérieur</span></li>
-          <li><span>Indexation de vos documents internes</span></li>
-          <li><span>Recherche sémantique</span></li>
-          <li><span>Personnalisable à votre secteur</span></li>
-          <li><span>Conforme aux exigences québécoises</span></li>
-        </ul>
-      </div>
-      <div class="product-visual reveal delay-1">
-        <div class="product-visual-img" style="background-image: url('https://picsum.photos/seed/marquis-llm-secure-vault/800/1000');"></div>
-        <div class="product-visual-overlay"></div>
-        <div class="product-visual-scanlines"></div>
-        <div class="product-visual-corner"></div>
-        <div class="product-visual-label">
-          <span>FIG. 03 — INFRASTRUCTURE PRIVÉE</span>
-          <span>DONNÉES SÉCURISÉES</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="process" id="methode">
-  <div class="container">
-    <div class="section-label reveal">Méthode</div>
-    <h2 class="section-headline reveal">Quatre étapes.<br><span class="accent">Aucune improvisation.</span></h2>
-
-    <div class="process-grid">
-      <div class="process-step reveal">
-        <div class="process-step-num">01</div>
-        <div class="process-step-title">Audit</div>
-        <div class="process-step-desc">Comprendre avant de proposer. Une journée passée dans votre entreprise, à écouter vos appels, lire vos processus, identifier les goulots.</div>
-      </div>
-      <div class="process-step reveal delay-1">
-        <div class="process-step-num">02</div>
-        <div class="process-step-title">Conception</div>
-        <div class="process-step-desc">Architecture technique, choix du modèle, intégration. Tout est documenté avant qu'une ligne de code soit écrite.</div>
-      </div>
-      <div class="process-step reveal delay-2">
-        <div class="process-step-num">03</div>
-        <div class="process-step-title">Déploiement</div>
-        <div class="process-step-desc">Installation en jours, pas en mois. Tests en conditions réelles. Formation de votre équipe sur place.</div>
-      </div>
-      <div class="process-step reveal delay-3">
-        <div class="process-step-num">04</div>
-        <div class="process-step-title">Suivi</div>
-        <div class="process-step-desc">Optimisation continue. Aucun système n'est jamais fini. Nous restons, nous mesurons, nous ajustons.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="sectors">
-  <div class="container">
-    <div class="section-label reveal">Secteurs servis</div>
-    <h2 class="section-headline reveal" style="margin-bottom: 1rem;">Là où l'IA <span class="accent">fait la différence.</span></h2>
-    <div class="sectors-grid">
-      <div class="sector-item reveal">Restaurants</div>
-      <div class="sector-item reveal delay-1">Cliniques</div>
-      <div class="sector-item reveal delay-2">Cabinets d'avocats</div>
-      <div class="sector-item reveal">Immobilier</div>
-      <div class="sector-item reveal delay-1">Salons & Spa</div>
-      <div class="sector-item reveal delay-2">Comptables</div>
-      <div class="sector-item reveal">Hôtellerie</div>
-      <div class="sector-item reveal delay-1">Services à domicile</div>
-      <div class="sector-item reveal delay-2">Construction</div>
-      <div class="sector-item reveal">Commerce de détail</div>
-      <div class="sector-item reveal delay-1">Assurances</div>
-      <div class="sector-item reveal delay-2">Architecture</div>
-    </div>
-  </div>
-</section>
-
-<section class="quote">
-  <div class="container-prose">
-    <div class="quote-mark reveal">"</div>
-    <p class="quote-text reveal delay-1">Marquis AI a transformé notre standard. Nous ratons zéro appel. Nos clients ne savent même pas qu'ils parlent à une machine.</p>
-    <div class="quote-author reveal delay-2">CLINIQUE DENTAIRE — PLATEAU-MONT-ROYAL</div>
-  </div>
-</section>
-
-<section class="contact" id="contact">
-  <div class="container">
-    <div class="section-label reveal">Contact</div>
-    <h2 class="section-headline reveal">Parlons de<br><span class="accent">votre entreprise.</span></h2>
-
-    <div class="contact-grid">
-      <div class="contact-info reveal">
-        <p class="contact-intro">Une heure de conversation suffit généralement pour identifier ce que nous pouvons automatiser, optimiser ou sécuriser. La démo est gratuite. Le diagnostic est honnête.</p>
-
-        <div class="contact-info-item">
-          <div class="contact-info-label">Studio</div>
-          <div class="contact-info-value">514, rue Saint-Denis<br>Montréal, Québec H2J 2K9</div>
-        </div>
-        <div class="contact-info-item">
-          <div class="contact-info-label">Téléphone</div>
-          <div class="contact-info-value">+1 (514) 555-0142</div>
-        </div>
-        <div class="contact-info-item">
-          <div class="contact-info-label">Courriel</div>
-          <div class="contact-info-value">bonjour@marquis-ai.ca</div>
-        </div>
-        <div class="contact-info-item">
-          <div class="contact-info-label">Heures</div>
-          <div class="contact-info-value">Lundi — Vendredi<br>9h à 18h (HNE)</div>
-        </div>
-      </div>
-
-      <form class="contact-form reveal delay-1" id="contactForm">
-        <div class="form-row">
-          <div class="form-field">
-            <label for="name">Nom</label>
-            <input type="text" id="name" name="name" required />
+  <section class="prod-content">
+    <div class="container">
+      <div class="details-grid">
+        <div>
+          <div class="detail-block">
+            <h3>Le problème</h3>
+            <p>Chaque appel manqué est un client perdu. Les entreprises québécoises perdent des milliers de dollars parce qu'elles ne peuvent pas répondre au téléphone pendant les heures de pointe, les lunchs ou en dehors des heures d'ouverture. La croissance souffre d'un goulot d'étranglement évitable.</p>
           </div>
-          <div class="form-field">
-            <label for="company">Entreprise</label>
-            <input type="text" id="company" name="company" required />
+          <div class="detail-block">
+            <h3>La solution Marquis</h3>
+            <p>Notre agent vocal répond instantanément. Il est formé spécifiquement sur vos services, vos tarifs et vos horaires. Il prend les réservations en temps réel, envoie un SMS de confirmation et transfère uniquement les cas complexes à votre équipe. Vous ne perdez plus jamais une opportunité.</p>
           </div>
         </div>
-        <div class="form-row">
-          <div class="form-field">
-            <label for="email">Courriel</label>
-            <input type="email" id="email" name="email" required />
-          </div>
-          <div class="form-field">
-            <label for="phone">Téléphone</label>
-            <input type="tel" id="phone" name="phone" />
-          </div>
+        <div>
+          <h3 style="margin-bottom: 1.5rem; font-size: 1.4rem;">Fonctionnalités clés</h3>
+          <ul class="feature-list">
+            <li><span class="check">+</span> <div><strong>Réponse instantanée</strong>Moins de 3 secondes de délai, 24 heures sur 24.</div></li>
+            <li><span class="check">+</span> <div><strong>Prise de rendez-vous</strong>Synchronisation directe avec votre agenda et CRM.</div></li>
+            <li><span class="check">+</span> <div><strong>Bilingue natif</strong>Basculage fluide entre français et anglais.</div></li>
+            <li><span class="check">+</span> <div><strong>SVI intelligent</strong>Transfert automatique vers les bons départements.</div></li>
+            <li><span class="check">+</span> <div><strong>Suivi automatisé</strong>Confirmation et rappels par SMS 24h avant.</div></li>
+            <li><span class="check">+</span> <div><strong>Tableaux de bord</strong>Logs détaillés et analytics de chaque interaction.</div></li>
+          </ul>
         </div>
-        <div class="form-field">
-          <label for="service">Service intéressé</label>
-          <select id="service" name="service" required>
-            <option value="">— Sélectionner —</option>
-            <option value="voice">Agent Vocal IA</option>
-            <option value="seo">SEO / Géolocalisation</option>
-            <option value="llm">LLM Interne</option>
-            <option value="multiple">Plusieurs services</option>
-          </select>
-        </div>
-        <div class="form-field">
-          <label for="message">Message</label>
-          <textarea id="message" name="message" rows="4" placeholder="Parlez-nous de votre entreprise, vos défis, vos objectifs..."></textarea>
-        </div>
-        <button type="submit" class="form-submit" id="formSubmit">Envoyer la demande <span>→</span></button>
-      </form>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>
 
-<footer>
+<!-- ========================================== -->
+<!-- PAGE: GEO -->
+<!-- ========================================== -->
+<div id="page-geo" class="page">
+  <section class="prod-hero">
+    <div class="container">
+      <div class="prod-hero-grid">
+        <div>
+          <p class="mono" style="margin-bottom: 1.5rem;">Produit 02</p>
+          <h1>GEO : Generative Engine Optimization</h1>
+          <p>Le SEO traditionnel est mort. Nous optimisons votre entreprise pour devenir une source citée par les moteurs d'IA comme ChatGPT, Perplexity et Google AI Overviews.</p>
+          <a href="#" data-page="contact" class="btn btn-primary">Audit GEO gratuit</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="prod-content">
+    <div class="container">
+      <div class="details-grid">
+        <div>
+          <div class="detail-block">
+            <h3>L'évolution du référencement</h3>
+            <p>Les utilisateurs ne cliquent plus sur des liens bleus. Ils posent des questions directes à des assistants IA. Si votre entreprise n'est pas dans la base de connaissances de ces moteurs génératifs, vous êtes invisibles pour une majorité de vos clients potentiels. Le trafic organique classique chute, le trafic "Zero-Click" explose.</p>
+          </div>
+          <div class="detail-block">
+            <h3>Notre méthodologie GEO</h3>
+            <p>Nous structurons vos données, optimisons votre sémantique et créons le réseau de signaux nécessaires pour que les algorithmes génératifs vous considèrent comme une autorité indiscutable dans votre domaine et votre région.</p>
+          </div>
+        </div>
+        <div>
+          <h3 style="margin-bottom: 1.5rem; font-size: 1.4rem;">Le processus GEO</h3>
+          <ul class="feature-list">
+            <li><span class="check">+</span> <div><strong>Audit de visibilité IA</strong>Où en êtes-vous sur ChatGPT et Perplexity aujourd'hui ?</div></li>
+            <li><span class="check">+</span> <div><strong>Structuration des données</strong>Schéma markup et balisage sémantique avancé.</div></li>
+            <li><span class="check">+</span> <div><strong>Réseau de citations</strong>Obtention de mentions sur des sources de haute confiance pour les LLMs.</div></li>
+            <li><span class="check">+</span> <div><strong>Optimisation sémantique</strong>Réécriture du contenu orientée "réponses génératives".</div></li>
+            <li><span class="check">+</span> <div><strong>Suivi mensuel</strong>Mesure exacte de vos apparitions dans les réponses IA.</div></li>
+            <li><span class="check">+</span> <div><strong>Google Business Pro</strong>Optimisation pour les recherches locales "Zero-Click".</div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ========================================== -->
+<!-- PAGE: LLM INTERNE -->
+<!-- ========================================== -->
+<div id="page-llm" class="page">
+  <section class="prod-hero">
+    <div class="container">
+      <div class="prod-hero-grid">
+        <div>
+          <p class="mono" style="margin-bottom: 1.5rem;">Produit 03</p>
+          <h1>LLM Interne Sécurisé</h1>
+          <p>L'intelligence de ChatGPT, mais hébergée chez vous. Vos données sensibles, juridiques ou médicales ne quittent jamais votre infrastructure.</p>
+          <a href="#" data-page="contact" class="btn btn-primary">Évaluer la compatibilité</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="prod-content">
+    <div class="container">
+      <div class="details-grid">
+        <div>
+          <div class="detail-block">
+            <h3>Le défi de la confidentialité</h3>
+            <p>Les cabinets d'avocats, les cliniques et les firmes de comptabilité ne peuvent pas envoyer des informations confidentielles à des services tiers. Les risques juridiques et de conformité avec la Loi 25 au Québec sont trop élevés. L'IA devient un risque au lieu d'un atout.</p>
+          </div>
+          <div class="detail-block">
+            <h3>L'infrastructure Marquis</h3>
+            <p>Nous déployons un modèle de langage open-source performant, connecté à votre réseau local ou cloud privé. Vos employés peuvent interroger vos documents, rédiger ou résumer des dossiers, avec une sécurité absolue et une interface aussi simple que ChatGPT.</p>
+          </div>
+        </div>
+        <div>
+          <h3 style="margin-bottom: 1.5rem; font-size: 1.4rem;">Avantages techniques</h3>
+          <ul class="feature-list">
+            <li><span class="check">+</span> <div><strong>Hébergement privé</strong>Sur vos serveurs physiques ou un cloud privé contrôlé.</div></li>
+            <li><span class="check">+</span> <div><strong>Zéro fuite de données</strong>Aucune information ne transite par un réseau public.</div></li>
+            <li><span class="check">+</span> <div><strong>RAG intégré (Génération Augmentée)</strong>Interrogez vos PDF, Word et bases de données internes.</div></li>
+            <li><span class="check">+</span> <div><strong>Conforme Loi 25</strong>Répond aux exigences strictes de protection des données.</div></li>
+            <li><span class="check">+</span> <div><strong>Interface intuitive</strong>Aussi facile à utiliser que les outils grand public.</div></li>
+            <li><span class="check">+</span> <div><strong>Personnalisation sectorielle</strong>Adapté au vocabulaire juridique, médical ou financier.</div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ========================================== -->
+<!-- PAGE: CONTACT -->
+<!-- ========================================== -->
+<div id="page-contact" class="page">
+  <section class="contact-section">
+    <div class="container">
+      <p class="mono" style="margin-bottom: 1rem;">Contact</p>
+      <h2>Parlons de votre entreprise.</h2>
+      <p style="max-width: 600px; margin-bottom: 4rem; font-size: 1.1rem;">Une heure de conversation suffit généralement pour identifier ce que nous pouvons automatiser, optimiser ou sécuriser. La démo est gratuite, le diagnostic est honnête.</p>
+
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="contact-info-item">
+            <label>Studio</label>
+            <p>514, rue Saint-Denis<br>Montréal, Québec H2J 2K9</p>
+          </div>
+          <div class="contact-info-item">
+            <label>Téléphone</label>
+            <p>+1 (514) 555-0142</p>
+          </div>
+          <div class="contact-info-item">
+            <label>Courriel</label>
+            <p>bonjour@marquis-ai.ca</p>
+          </div>
+          <div class="contact-info-item">
+            <label>Heures</label>
+            <p>Lundi — Vendredi<br>9h à 18h (HNE)</p>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <form id="contactForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Nom complet</label>
+                <input type="text" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label>Entreprise</label>
+                <input type="text" class="form-control" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Courriel</label>
+                <input type="email" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label>Téléphone</label>
+                <input type="tel" class="form-control">
+              </div>
+            </div>
+            <div class="form-group full">
+              <label>Service intéressé</label>
+              <select class="form-control" required>
+                <option value="">— Sélectionner —</option>
+                <option value="voice">Agent Vocal IA</option>
+                <option value="geo">GEO (Moteurs IA)</option>
+                <option value="llm">LLM Interne</option>
+                <option value="autre">Autre / Plusieurs services</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label>Message</label>
+              <textarea class="form-control" placeholder="Décrivez brièvement votre défi principal..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;" id="submitBtn">Envoyer la demande</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Footer (Global) -->
+<footer class="footer">
   <div class="container">
-    <div class="footer-top">
+    <div class="footer-grid">
       <div>
-        <div class="footer-logo">Marquis <span class="accent">AI</span></div>
-        <p class="footer-tagline">Studio d'intelligence artificielle basé à Montréal. Au service des entreprises québécoises depuis 2024.</p>
+        <h2 style="color: #fff; font-size: 1.8rem; margin-bottom: 1.5rem;">Marquis<span style="color: var(--accent);">.</span></h2>
+        <p>Studio d'intelligence artificielle basé à Montréal. Nous construisons des systèmes efficaces pour les entreprises québécoises.</p>
       </div>
-      <div class="footer-col">
-        <div class="footer-col-title">Produits</div>
+      <div>
+        <h4>Produits</h4>
         <ul>
-          <li><a href="#produits">Agent Vocal IA</a></li>
-          <li><a href="#produits">SEO / Géolocalisation</a></li>
-          <li><a href="#produits">LLM Interne</a></li>
+          <li><a href="#" data-page="voice">Agent Vocal IA</a></li>
+          <li><a href="#" data-page="geo">GEO</a></li>
+          <li><a href="#" data-page="llm">LLM Interne</a></li>
         </ul>
       </div>
-      <div class="footer-col">
-        <div class="footer-col-title">Entreprise</div>
+      <div>
+        <h4>Entreprise</h4>
         <ul>
-          <li><a href="#manifeste">Manifeste</a></li>
-          <li><a href="#methode">Méthode</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="#" data-page="home">Accueil</a></li>
+          <li><a href="#" data-page="contact">Contact</a></li>
         </ul>
       </div>
-      <div class="footer-col">
-        <div class="footer-col-title">Légal</div>
+      <div>
+        <h4>Légal</h4>
         <ul>
           <li><a href="#">Confidentialité</a></li>
           <li><a href="#">Conditions</a></li>
-          <li><a href="#">Sécurité</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <div>© 2025 Marquis AI Inc. · Tous droits réservés</div>
-      <div>Conçu à Montréal</div>
+      <span>© 2025 Marquis AI Inc. · Tous droits réservés</span>
+      <span>Conçu à Montréal</span>
     </div>
   </div>
 </footer>
 
-<script type="importmap">
-{ "imports": { "three": "https://unpkg.com/three@0.183/build/three.module.js" } }
-</script>
+<!-- Reliable Client-Side Router -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Get all elements that trigger navigation
+    const navTriggers = document.querySelectorAll('[data-page]');
+    const pages = document.querySelectorAll('.page');
+    const nav = document.getElementById('mainNav');
+    let currentPageId = 'home';
 
-<script type="module">
-import * as THREE from 'three';
+    function navigateTo(pageId) {
+      // Prevent duplicate navigations
+      if (pageId === currentPageId) return;
+      currentPageId = pageId;
 
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const isTouch = ('ontouchstart' in window) || !window.matchMedia('(pointer: fine)').matches;
+      const targetPage = document.getElementById('page-' + pageId);
+      if (!targetPage) return;
 
-/* ---------- Particle field ---------- */
-const canvas = document.getElementById('particle-canvas');
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setClearColor(0x000000, 0);
+      // Update Nav Active State
+      document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
+      const activeLink = document.querySelector(`.nav-links [data-page="${pageId}"]`);
+      if (activeLink) activeLink.classList.add('active');
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
-camera.position.z = 6;
-
-function makeParticles(count, color, sizeMult) {
-  const positions = new Float32Array(count * 3);
-  const sizes = new Float32Array(count);
-  const offsets = new Float32Array(count);
-  for (let i = 0; i < count; i++) {
-    positions[i * 3]     = (Math.random() - 0.5) * 18;
-    positions[i * 3 + 1] = (Math.random() - 0.5) * 12;
-    positions[i * 3 + 2] = (Math.random() - 0.5) * 12;
-    sizes[i]   = (Math.random() * 1.6 + 0.4) * sizeMult;
-    offsets[i] = Math.random() * Math.PI * 2;
-  }
-  const geo = new THREE.BufferGeometry();
-  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  geo.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1));
-  geo.setAttribute('aOffset', new THREE.BufferAttribute(offsets, 1));
-  const mat = new THREE.ShaderMaterial({
-    uniforms: { uTime: { value: 0 }, uColor: { value: new THREE.Color(color) } },
-    vertexShader: `
-      attribute float aSize; attribute float aOffset;
-      uniform float uTime;
-      varying float vAlpha;
-      void main() {
-        vec3 p = position;
-        p.y += sin(uTime * 0.3 + aOffset) * 0.4;
-        p.x += cos(uTime * 0.25 + aOffset * 0.7) * 0.2;
-        vec4 mv = modelViewMatrix * vec4(p, 1.0);
-        gl_PointSize = aSize * (180.0 / -mv.z);
-        gl_Position = projectionMatrix * mv;
-        vAlpha = 0.55 + 0.45 * sin(uTime * 0.6 + aOffset);
+      // Handle Nav styling based on page background
+      if (pageId === 'home') {
+        nav.classList.add('dark-mode');
+      } else {
+        nav.classList.remove('dark-mode');
       }
-    `,
-    fragmentShader: `
-      varying float vAlpha;
-      uniform vec3 uColor;
-      void main() {
-        vec2 uv = gl_PointCoord - vec2(0.5);
-        if (length(uv) > 0.5) discard;
-        gl_FragColor = vec4(uColor, smoothstep(0.5, 0.0, length(uv)) * vAlpha * 0.55);
+
+      // Fade out current page
+      const activePage = document.querySelector('.page.visible');
+      if (activePage) {
+        activePage.classList.remove('visible');
+        
+        // Wait for fade out, then switch
+        setTimeout(() => {
+          pages.forEach(p => p.classList.remove('active'));
+          targetPage.classList.add('active');
+          
+          // Force reflow to restart CSS transition
+          void targetPage.offsetWidth; 
+          
+          // Fade in new page
+          targetPage.classList.add('visible');
+          
+          // Scroll to top instantly
+          window.scrollTo({ top: 0, behavior: 'instant' });
+        }, 300); // Match CSS transition duration
+      } else {
+        // Fallback if no page is currently visible
+        pages.forEach(p => p.classList.remove('active'));
+        targetPage.classList.add('active');
+        void targetPage.offsetWidth;
+        targetPage.classList.add('visible');
+        window.scrollTo({ top: 0, behavior: 'instant' });
       }
-    `,
-    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending
-  });
-  return new THREE.Points(geo, mat);
-}
-
-const isMobile = window.innerWidth < 768;
-const particlesMain = makeParticles(isMobile ? 600 : 1200, 0xffffff, 1.0);
-const particlesAccent = makeParticles(isMobile ? 80 : 180, 0xea0000, 1.2);
-scene.add(particlesMain);
-scene.add(particlesAccent);
-
-const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
-let scrollY = 0;
-window.addEventListener('mousemove', (e) => {
-  mouse.tx = (e.clientX / window.innerWidth - 0.5) * 0.5;
-  mouse.ty = (e.clientY / window.innerHeight - 0.5) * 0.5;
-});
-window.addEventListener('scroll', () => { scrollY = window.scrollY; }, { passive: true });
-
-let isVisible = true;
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { isVisible = e.isIntersecting; });
-}, { threshold: 0 });
-observer.observe(canvas);
-
-const clock = new THREE.Clock();
-function tick() {
-  requestAnimationFrame(tick);
-  if (!isVisible) return;
-  const t = clock.getElapsedTime();
-  particlesMain.material.uniforms.uTime.value = t;
-  particlesAccent.material.uniforms.uTime.value = t;
-  mouse.x += (mouse.tx - mouse.x) * 0.04;
-  mouse.y += (mouse.ty - mouse.y) * 0.04;
-  scene.rotation.y = mouse.x * 0.6 + scrollY * 0.0002;
-  scene.rotation.x = mouse.y * 0.4;
-  renderer.render(scene, camera);
-}
-if (!prefersReducedMotion) tick();
-else renderer.render(scene, camera);
-
-window.addEventListener('resize', () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
-
-/* ---------- Custom cursor ---------- */
-const cursorEl = document.getElementById('custom-cursor');
-if (!isTouch) {
-  const target = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-  const pos = { x: target.x, y: target.y };
-  let hover = false;
-  window.addEventListener('mousemove', (e) => {
-    target.x = e.clientX; target.y = e.clientY;
-  });
-  window.addEventListener('mouseover', (e) => {
-    const t = e.target;
-    hover = !!(t.closest('a, button, [data-cursor-hover], input, textarea, select, .product-visual'));
-  });
-  (function loop() {
-    pos.x += (target.x - pos.x) * 0.18;
-    pos.y += (target.y - pos.y) * 0.18;
-    const s = hover ? 48 : 12;
-    cursorEl.style.transform = `translate(${pos.x - s/2}px, ${pos.y - s/2}px)`;
-    cursorEl.style.width = cursorEl.style.height = s + 'px';
-    cursorEl.style.opacity = hover ? 0.55 : 1;
-    requestAnimationFrame(loop);
-  })();
-} else {
-  cursorEl.style.display = 'none';
-  document.body.style.cursor = 'auto';
-}
-
-/* ---------- Scroll progress ---------- */
-const scrollProgress = document.getElementById('scrollProgress');
-window.addEventListener('scroll', () => {
-  const max = document.documentElement.scrollHeight - window.innerHeight;
-  const pct = Math.min(100, (window.scrollY / max) * 100);
-  scrollProgress.style.width = pct + '%';
-}, { passive: true });
-
-/* ---------- Typewriter ---------- */
-const typewriterText = `Studio d'intelligence artificielle basé à Montréal.
-Nous concevons des systèmes qui parlent, répondent et référencent.
-Trois produits pour les entreprises québécoises.
-Une exigence : l'élégance fonctionnelle.`;
-
-const tw = document.getElementById('typewriter-text');
-const caret = document.getElementById('caret');
-const heroCta = document.getElementById('heroCta');
-
-if (prefersReducedMotion) {
-  tw.textContent = typewriterText;
-  caret.classList.add('is-hidden');
-  heroCta.classList.add('is-shown');
-} else {
-  let i = 0;
-  setTimeout(() => {
-    const interval = setInterval(() => {
-      i++;
-      tw.textContent = typewriterText.slice(0, i);
-      if (i >= typewriterText.length) {
-        clearInterval(interval);
-        let n = 0, on = true;
-        const blink = setInterval(() => {
-          caret.classList.toggle('is-hidden', !(on = !on));
-          if (++n >= 6) {
-            clearInterval(blink);
-            caret.classList.add('is-hidden');
-            heroCta.classList.add('is-shown');
-          }
-        }, 400);
-      }
-    }, 38);
-  }, 700);
-}
-
-/* ---------- Reveal on scroll ---------- */
-const reveals = document.querySelectorAll('.reveal');
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('is-in');
-      revealObserver.unobserve(e.target);
     }
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-reveals.forEach(r => revealObserver.observe(r));
 
-/* ---------- Parallax on product visuals ---------- */
-const productVisuals = document.querySelectorAll('.product-visual');
-function updateParallax() {
-  productVisuals.forEach(pv => {
-    const img = pv.querySelector('.product-visual-img');
-    if (!img) return;
-    const rect = pv.getBoundingClientRect();
-    if (rect.top < window.innerHeight && rect.bottom > 0) {
-      const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) / window.innerHeight;
-      img.style.setProperty('--parallax', offset.toFixed(3));
-    }
-  });
-}
-window.addEventListener('scroll', updateParallax, { passive: true });
-updateParallax();
+    // Attach click events to ALL links with data-page
+    navTriggers.forEach(trigger => {
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        const pageId = trigger.getAttribute('data-page');
+        navigateTo(pageId);
+      });
+    });
 
-/* ---------- Form submit ---------- */
-const form = document.getElementById('contactForm');
-const formSubmit = document.getElementById('formSubmit');
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const original = formSubmit.innerHTML;
-  formSubmit.innerHTML = 'Envoi en cours...';
-  formSubmit.disabled = true;
-  setTimeout(() => {
-    formSubmit.innerHTML = '✓ Demande reçue';
+    // Initialize dark mode for home page
+    nav.classList.add('dark-mode');
+  });
+
+  // Form Handling
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const originalText = btn.innerText;
+    btn.innerText = 'Envoi en cours...';
+    btn.disabled = true;
+    btn.style.opacity = '0.7';
+    btn.style.cursor = 'not-allowed';
+
     setTimeout(() => {
-      formSubmit.innerHTML = original;
-      formSubmit.disabled = false;
-      form.reset();
-    }, 2500);
-  }, 1200);
-});
+      btn.innerText = '✓ Demande envoyée avec succès';
+      btn.style.background = '#16a34a';
+      btn.style.borderColor = '#16a34a';
+      btn.style.opacity = '1';
+      btn.style.cursor = 'default';
+      
+      setTimeout(() => {
+        btn.innerText = originalText;
+        btn.disabled = false;
+        btn.style.background = '';
+        btn.style.borderColor = '';
+        btn.style.opacity = '';
+        btn.style.cursor = '';
+        this.reset();
+      }, 2500);
+    }, 1200);
+  });
 </script>
 
 </body>
