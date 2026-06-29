@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Marquis AI — Intelligence artificielle pour entreprises québécoises</title>
+<meta name="description" content="Studio d'IA montréalais. Agent vocal, Optimisation pour moteurs génératifs (GEO), et LLM interne sécurisé." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" />
+<style>
+:root {
+  --bg: #F5F5F7;
+  --bg-dark: #0A0A0A;
+  --bg-card: #FFFFFF;
+  --text: #111111;
+  --text-light: #F5F5F7;
+  --text-secondary: #555555;
+  --text-muted: #888888;
+  --border: #E0E0E0;
+  --accent: #E31937; /* Rouge dynamique mais professionnel */
+  --accent-hover: #C41530;
+  --accent-dark-bg: #FF2D4B;
+  --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; transition: color var(--transition); cursor: pointer; }
+img { max-width: 100%; display: block; }
+::selection { background: var(--accent); color: #fff; }
+
+/* --- Layout --- */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+/* --- Typography --- */
+h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
+h1 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 2rem; }
+h2 { font-size: clamp(2rem, 4vw, 3.2rem); margin-bottom: 1.5rem; }
+h3 { font-size: 1.4rem; margin-bottom: 1rem; }
+p { color: var(--text-secondary); margin-bottom: 1.25rem; }
+.mono { font-family: 'Inter', monospace; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); }
+
+/* --- Buttons --- */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 1rem 2rem; border-radius: 0px; font-size: 0.9rem; font-weight: 600;
+  transition: all var(--transition); border: 2px solid transparent; cursor: pointer;
+  font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 0.05em;
+}
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(227, 25, 55, 0.25); }
+.btn-secondary { background: transparent; color: var(--text); border-color: var(--text); }
+.btn-secondary:hover { background: var(--text); color: var(--bg); }
+
+/* --- Nav --- */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(245, 245, 247, 0.9); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  transition: background var(--transition), border-color var(--transition);
+}
+.nav.dark-mode { background: rgba(10, 10, 10, 0.95); border-color: rgba(255,255,255,0.1); }
+.nav.dark-mode .nav-links a, .nav.dark-mode .nav-logo { color: var(--text-light); }
+.nav.dark-mode .nav-links a:hover, .nav.dark-mode .nav-links a.active { color: var(--accent-dark-bg); }
+
+.nav-inner { display: flex; justify-content: space-between; align-items: center; height: 72px; }
+.nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; display: flex; align-items: center; gap: 0.5rem; color: var(--text); }
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 2.5rem; }
+.nav-links a { font-size: 0.9rem; color: var(--text-secondary); font-weight: 500; position: relative; }
+.nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--accent); transition: width var(--transition); }
+.nav-links a:hover, .nav-links a.active { color: var(--text); }
+.nav-links a.active::after, .nav-links a:hover::after { width: 100%; }
+.nav-cta { margin-left: 1rem; }
+
+/* --- Page System --- */
+.page { display: none; opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; padding-top: 72px; min-height: 100vh; }
+.page.active { display: block; }
+.page.visible { opacity: 1; transform: translateY(0); }
+
+/* --- Home Page --- */
+.hero { padding: 10rem 0 6rem; background: var(--bg-dark); color: var(--text-light); position: relative; overflow: hidden; margin-top: -72px; padding-top: calc(72px + 6rem); }
+.hero::before { content: ''; position: absolute; top: -50%; right: -20%; width: 800px; height: 800px; background: radial-gradient(circle, rgba(227,25,55,0.15) 0%, transparent 70%); pointer-events: none; }
+.hero h1 { max-width: 900px; }
+.hero h1 .accent { color: var(--accent-dark-bg); }
+.hero-sub { font-size: 1.2rem; max-width: 600px; color: rgba(255,255,255,0.7); margin-bottom: 3rem; line-height: 1.7; }
+.hero .btn-secondary { color: var(--text-light); border-color: rgba(255,255,255,0.3); }
+.hero .btn-secondary:hover { background: var(--text-light); color: var(--bg-dark); }
+
+.products-section { padding: 8rem 0; }
+.products-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; border-bottom: 2px solid var(--text); padding-bottom: 2rem; }
+.products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+.product-card {
+  background: var(--bg-card); border: 1px solid var(--border); 
+  padding: 3rem 2.5rem; transition: all var(--transition); display: flex; flex-direction: column; position: relative;
+}
+.product-card:hover { background: var(--bg-dark); color: var(--text-light); z-index: 2; transform: scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+.product-card:hover .card-num { color: var(--accent-dark-bg); }
+.product-card:hover .card-link { color: var(--accent-dark-bg); }
+.product-card:hover p { color: rgba(255,255,255,0.6); }
+.card-num { font-family: 'Space Grotesk', sans-serif; font-size: 4rem; font-weight: 700; color: var(--border); margin-bottom: 2rem; line-height: 1; transition: color var(--transition); }
+.card-body { flex: 1; }
+.card-link { margin-top: 2.5rem; font-size: 0.9rem; font-weight: 600; color: var(--accent); display: inline-flex; align-items: center; gap: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; transition: all var(--transition); }
+.card-link:hover { gap: 1rem; }
+
+.trust-strip { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-card); }
+.trust-item { padding: 3rem 2rem; border-right: 1px solid var(--border); text-align: center; }
+.trust-item:last-child { border-right: none; }
+.trust-num { font-family: 'Space Grotesk', sans-serif; font-size: 3rem; font-weight: 700; color: var(--text); display: block; line-height: 1; margin-bottom: 0.5rem; }
+.trust-num span { color: var(--accent); }
+.trust-label { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;}
+
+/* --- Product Pages --- */
+.prod-hero { padding: 6rem 0 5rem; background: var(--bg-dark); color: var(--text-light); margin-top: -72px; padding-top: calc(72px + 4rem); position: relative; }
+.prod-hero::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 150px; background: linear-gradient(to top, var(--bg), transparent); pointer-events: none; z-index: 1;}
+.prod-hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; position: relative; z-index: 2; }
+.prod-hero h1 { margin-bottom: 1.5rem; }
+.prod-hero p { color: rgba(255,255,255,0.7); font-size: 1.1rem; }
+.prod-hero .btn-primary { margin-top: 2rem; }
+
+.prod-content { padding: 6rem 0; }
+.details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; }
+.detail-block { margin-bottom: 4rem; }
+.detail-block h3 { font-size: 1.6rem; color: var(--text); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
+.detail-block h3::before { content: ''; display: block; width: 40px; height: 4px; background: var(--accent); flex-shrink: 0; }
+
+.feature-list { list-style: none; margin-top: 2rem; background: var(--bg-card); border: 1px solid var(--border); padding: 0; }
+.feature-list li { padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 1.25rem; font-size: 0.95rem; color: var(--text-secondary); transition: background var(--transition); }
+.feature-list li:last-child { border-bottom: none; }
+.feature-list li:hover { background: #fafafa; }
+.feature-list li strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 0.2rem; }
+.check { color: var(--accent); font-weight: 800; font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+
+/* --- Contact Page --- */
+.contact-section { padding: 6rem 0 10rem; }
+.contact-grid { display: grid; grid-template-columns: 5fr 7fr; gap: 6rem; }
+.contact-info-item { margin-bottom: 3rem; }
+.contact-info-item label { display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 600; }
+.contact-info-item p { color: var(--text); margin: 0; font-size: 1.1rem; font-weight: 500; line-height: 1.5; }
+
+.form-card { background: var(--bg-card); border: 1px solid var(--border); padding: 3rem; box-shadow: 0 10px 40px rgba(0,0,0,0.03); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.form-group { margin-bottom: 1.5rem; }
+.form-group.full { grid-column: 1 / -1; }
+.form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text); }
+.form-control { width: 100%; padding: 1rem; border: 1px solid var(--border); border-radius: 0px; font-family: inherit; font-size: 0.95rem; background: var(--bg); color: var(--text); transition: border-color var(--transition), box-shadow var(--transition); outline: none; }
+.form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(227, 25, 55, 0.1); }
+textarea.form-control { resize: vertical; min-height: 120px; }
+select.form-control { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23888' d='M6 8L0 0h12z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; }
+
+/* --- Footer --- */
+.footer { background: var(--bg-dark); color: var(--text-light); padding: 6rem 0 3rem; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
+.footer p { color: rgba(255,255,255,0.5); font-size: 0.95rem; line-height: 1.7; }
+.footer h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 2rem; color: rgba(255,255,255,0.3); font-family: 'Inter', sans-serif; font-weight: 600;}
+.footer ul { list-style: none; }
+.footer ul li { margin-bottom: 1rem; }
+.footer ul a { color: rgba(255,255,255,0.6); font-size: 0.95rem; transition: color var(--transition); }
+.footer ul a:hover { color: #fff; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 3rem; display: flex; justify-content: space-between; font-size: 0.8rem; color: rgba(255,255,255,0.3); }
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .products-grid { grid-template-columns: 1fr; }
+  .product-card:hover { transform: none; }
+  .trust-strip { grid-template-columns: 1fr 1fr; }
+  .trust-item { border-bottom: 1px solid var(--border); }
+  .prod-hero-grid, .details-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; gap: 1rem; }
+  .form-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" id="mainNav">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo" data-page="home">Marquis<span>.</span></a>
+    <div class="nav-links">
+      <a href="#" data-page="home" class="active">Accueil</a>
+      <a href="#" data-page="voice">Agent Vocal</a>
+      <a href="#" data-page="geo">GEO</a>
+      <a href="#" data-page="llm">LLM Interne</a>
+    </div>
+    <a href="#" data-page="contact" class="btn btn-primary nav-cta">Démo gratuite</a>
+  </div>
+</nav>
+
+<!-- ========================================== -->
+<!-- PAGE: HOME -->
+<!-- ========================================== -->
+<div id="page-home" class="page active visible">
+  <section class="hero">
+    <div class="container">
+      <p class="mono" style="margin-bottom: 2rem;">Studio d'IA · Montréal · 2025</p>
+      <h1>L'IA qui travaille <br><span class="accent">pour votre entreprise.</span></h1>
+      <p class="hero-sub">Nous concevons des systèmes d'intelligence artificielle qui répondent à vos clients, optimisent votre visibilité dans les moteurs IA, et sécurisent vos données. Sans jargon, sans retard.</p>
+      <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+        <a href="#" data-page="contact" class="btn btn-primary">Démarrer un projet</a>
+        <a href="#produits-acc" class="btn btn-secondary">Découvrir les produits</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="products-section" id="produits-acc">
+    <div class="container">
+      <div class="products-header">
+        <div>
+          <p class="mono" style="margin-bottom: 1rem;">Nos produits</p>
+          <h2>Trois solutions.<br>Zéro compromis.</h2>
+        </div>
+      </div>
+      
+      <div class="products-grid">
+        <div class="product-card">
+          <div class="card-num">01</div>
+          <div class="card-body">
+            <h3>Agent Vocal IA</h3>
+            <p>Un standard téléphonique qui répond 24/7, prend les réservations et qualifie les leads sans aucune intervention humaine.</p>
+            <a href="#" data-page="voice" class="card-link">Voir le produit →</a>
+          </div>
+        </div>
+        
+        <div class="product-card">
+          <div class="card-num">02</div>
+          <div class="card-body">
+            <h3>GEO (Génération Engine Opt.)</h3>
+            <p>Soyez cité par ChatGPT, Perplexity et Google AI. Le référencement de la nouvelle génération de moteurs de recherche.</p>
+            <a href="#" data-page="geo" class="card-link">Voir le produit →</a>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="card-num">03</div>
+          <div class="card-body">
+            <h3>LLM Interne Sécurisé</h3>
+            <p>Un ChatGPT privé hébergé chez vous. Vos employés utilisent l'IA sans que vos données confidentielles ne quittent vos serveurs.</p>
+            <a href="#" data-page="llm" class="card-link">Voir le produit →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="trust-strip">
+    <div class="trust-item"><span class="trust-num">24<span>/</span>7</span><span class="trust-label">Disponibilité</span></div>
+    <div class="trust-item"><span class="trust-num">100<span>%</span></span><span class="trust-label">Données au Québec</span></div>
+    <div class="trust-item"><span class="trust-num">&lt;2<span>s</span></span><span class="trust-label">Temps de réponse</span></div>
+    <div class="trust-item"><span class="trust-num">0</span><span class="trust-label">Ligne de code à écrire</span></div>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- PAGE: AGENT VOCAL -->
+<!-- ========================================== -->
+<div id="page-voice" class="page">
+  <section class="prod-hero">
+    <div class="container">
+      <div class="prod-hero-grid">
+        <div>
+          <p class="mono" style="margin-bottom: 1.5rem;">Produit 01</p>
+          <h1>Agent Vocal IA</h1>
+          <p>Un réceptionniste virtuel qui ne dort jamais, ne prend jamais de congé, et ne rate aucun appel entrant.</p>
+          <a href="#" data-page="contact" class="btn btn-primary">Demander une démo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="prod-content">
+    <div class="container">
+      <div class="details-grid">
+        <div>
+          <div class="detail-block">
+            <h3>Le problème</h3>
+            <p>Chaque appel manqué est un client perdu. Les entreprises québécoises perdent des milliers de dollars parce qu'elles ne peuvent pas répondre au téléphone pendant les heures de pointe, les lunchs ou en dehors des heures d'ouverture. La croissance souffre d'un goulot d'étranglement évitable.</p>
+          </div>
+          <div class="detail-block">
+            <h3>La solution Marquis</h3>
+            <p>Notre agent vocal répond instantanément. Il est formé spécifiquement sur vos services, vos tarifs et vos horaires. Il prend les réservations en temps réel, envoie un SMS de confirmation et transfère uniquement les cas complexes à votre équipe. Vous ne perdez plus jamais une opportunité.</p>
+          </div>
+        </div>
+        <div>
+          <h3 style="margin-bottom: 1.5rem; font-size: 1.4rem;">Fonctionnalités clés</h3>
+          <ul class="feature-list">
+            <li><span class="check">+</span> <div><strong>Réponse instantanée</strong>Moins de 3 secondes de délai, 24 heures sur 24.</div></li>
+            <li><span class="check">+</span> <div><strong>Prise de rendez-vous</strong>Synchronisation directe avec votre agenda et CRM.</div></li>
+            <li><span class="check">+</span> <div><strong>Bilingue natif</strong>Basculage fluide entre français et anglais.</div></li>
+            <li><span class="check">+</span> <div><strong>SVI intelligent</strong>Transfert automatique vers les bons départements.</div></li>
+            <li><span class="check">+</span> <div><strong>Suivi automatisé</strong>Confirmation et rappels par SMS 24h avant.</div></li>
+            <li><span class="check">+</span> <div><strong>Tableaux de bord</strong>Logs détaillés et analytics de chaque interaction.</div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ========================================== -->
+<!-- PAGE: GEO -->
+<!-- ========================================== -->
+<div id="page-geo" class="page">
+  <section class="prod-hero">
+    <div class="container">
+      <div class="prod-hero-grid">
+        <div>
+          <p class="mono" style="margin-bottom: 1.5rem;">Produit 02</p>
+          <h1>GEO : Generative Engine Optimization</h1>
+          <p>Le SEO traditionnel est mort. Nous optimisons votre entreprise pour devenir une source citée par les moteurs d'IA comme ChatGPT, Perplexity et Google AI Overviews.</p>
+          <a href="#" data-page="contact" class="btn btn-primary">Audit GEO gratuit</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="prod-content">
+    <div class="container">
+      <div class="details-grid">
+        <div>
+          <div class="detail-block">
+            <h3>L'évolution du référencement</h3>
+            <p>Les utilisateurs ne cliquent plus sur des liens bleus. Ils posent des questions directes à des assistants IA. Si votre entreprise n'est pas dans la base de connaissances de ces moteurs génératifs, vous êtes invisibles pour une majorité de vos clients potentiels. Le trafic organique classique chute, le trafic "Zero-Click" explose.</p>
+          </div>
+          <div class="detail-block">
+            <h3>Notre méthodologie GEO</h3>
+            <p>Nous structurons vos données, optimisons votre sémantique et créons le réseau de signaux nécessaires pour que les algorithmes génératifs vous considèrent comme une autorité indiscutable dans votre domaine et votre région.</p>
+          </div>
+        </div>
+        <div>
+          <h3 style="margin-bottom: 1.5rem; font-size: 1.4rem;">Le processus GEO</h3>
+          <ul class="feature-list">
+            <li><span class="check">+</span> <div><strong>Audit de visibilité IA</strong>Où en êtes-vous sur ChatGPT et Perplexity aujourd'hui ?</div></li>
+            <li><span class="check">+</span> <div><strong>Structuration des données</strong>Schéma markup et balisage sémantique avancé.</div></li>
+            <li><span class="check">+</span> <div><strong>Réseau de citations</strong>Obtention de mentions sur des sources de haute confiance pour les LLMs.</div></li>
+            <li><span class="check">+</span> <div><strong>Optimisation sémantique</strong>Réécriture du contenu orientée "réponses génératives".</div></li>
+            <li><span class="check">+</span> <div><strong>Suivi mensuel</strong>Mesure exacte de vos apparitions dans les réponses IA.</div></li>
+            <li><span class="check">+</span> <div><strong>Google Business Pro</strong>Optimisation pour les recherches locales "Zero-Click".</div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ========================================== -->
+<!-- PAGE: LLM INTERNE -->
+<!-- ========================================== -->
+<div id="page-llm" class="page">
+  <section class="prod-hero">
+    <div class="container">
+      <div class="prod-hero-grid">
+        <div>
+          <p class="mono" style="margin-bottom: 1.5rem;">Produit 03</p>
+          <h1>LLM Interne Sécurisé</h1>
+          <p>L'intelligence de ChatGPT, mais hébergée chez vous. Vos données sensibles, juridiques ou médicales ne quittent jamais votre infrastructure.</p>
+          <a href="#" data-page="contact" class="btn btn-primary">Évaluer la compatibilité</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="prod-content">
+    <div class="container">
+      <div class="details-grid">
+        <div>
+          <div class="detail-block">
+            <h3>Le défi de la confidentialité</h3>
+            <p>Les cabinets d'avocats, les cliniques et les firmes de comptabilité ne peuvent pas envoyer des informations confidentielles à des services tiers. Les risques juridiques et de conformité avec la Loi 25 au Québec sont trop élevés. L'IA devient un risque au lieu d'un atout.</p>
+          </div>
+          <div class="detail-block">
+            <h3>L'infrastructure Marquis</h3>
+            <p>Nous déployons un modèle de langage open-source performant, connecté à votre réseau local ou cloud privé. Vos employés peuvent interroger vos documents, rédiger ou résumer des dossiers, avec une sécurité absolue et une interface aussi simple que ChatGPT.</p>
+          </div>
+        </div>
+        <div>
+          <h3 style="margin-bottom: 1.5rem; font-size: 1.4rem;">Avantages techniques</h3>
+          <ul class="feature-list">
+            <li><span class="check">+</span> <div><strong>Hébergement privé</strong>Sur vos serveurs physiques ou un cloud privé contrôlé.</div></li>
+            <li><span class="check">+</span> <div><strong>Zéro fuite de données</strong>Aucune information ne transite par un réseau public.</div></li>
+            <li><span class="check">+</span> <div><strong>RAG intégré (Génération Augmentée)</strong>Interrogez vos PDF, Word et bases de données internes.</div></li>
+            <li><span class="check">+</span> <div><strong>Conforme Loi 25</strong>Répond aux exigences strictes de protection des données.</div></li>
+            <li><span class="check">+</span> <div><strong>Interface intuitive</strong>Aussi facile à utiliser que les outils grand public.</div></li>
+            <li><span class="check">+</span> <div><strong>Personnalisation sectorielle</strong>Adapté au vocabulaire juridique, médical ou financier.</div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ========================================== -->
+<!-- PAGE: CONTACT -->
+<!-- ========================================== -->
+<div id="page-contact" class="page">
+  <section class="contact-section">
+    <div class="container">
+      <p class="mono" style="margin-bottom: 1rem;">Contact</p>
+      <h2>Parlons de votre entreprise.</h2>
+      <p style="max-width: 600px; margin-bottom: 4rem; font-size: 1.1rem;">Une heure de conversation suffit généralement pour identifier ce que nous pouvons automatiser, optimiser ou sécuriser. La démo est gratuite, le diagnostic est honnête.</p>
+
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="contact-info-item">
+            <label>Studio</label>
+            <p>514, rue Saint-Denis<br>Montréal, Québec H2J 2K9</p>
+          </div>
+          <div class="contact-info-item">
+            <label>Téléphone</label>
+            <p>+1 (514) 555-0142</p>
+          </div>
+          <div class="contact-info-item">
+            <label>Courriel</label>
+            <p>bonjour@marquis-ai.ca</p>
+          </div>
+          <div class="contact-info-item">
+            <label>Heures</label>
+            <p>Lundi — Vendredi<br>9h à 18h (HNE)</p>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <form id="contactForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Nom complet</label>
+                <input type="text" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label>Entreprise</label>
+                <input type="text" class="form-control" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Courriel</label>
+                <input type="email" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label>Téléphone</label>
+                <input type="tel" class="form-control">
+              </div>
+            </div>
+            <div class="form-group full">
+              <label>Service intéressé</label>
+              <select class="form-control" required>
+                <option value="">— Sélectionner —</option>
+                <option value="voice">Agent Vocal IA</option>
+                <option value="geo">GEO (Moteurs IA)</option>
+                <option value="llm">LLM Interne</option>
+                <option value="autre">Autre / Plusieurs services</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label>Message</label>
+              <textarea class="form-control" placeholder="Décrivez brièvement votre défi principal..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;" id="submitBtn">Envoyer la demande</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Footer (Global) -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h2 style="color: #fff; font-size: 1.8rem; margin-bottom: 1.5rem;">Marquis<span style="color: var(--accent);">.</span></h2>
+        <p>Studio d'intelligence artificielle basé à Montréal. Nous construisons des systèmes efficaces pour les entreprises québécoises.</p>
+      </div>
+      <div>
+        <h4>Produits</h4>
+        <ul>
+          <li><a href="#" data-page="voice">Agent Vocal IA</a></li>
+          <li><a href="#" data-page="geo">GEO</a></li>
+          <li><a href="#" data-page="llm">LLM Interne</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Entreprise</h4>
+        <ul>
+          <li><a href="#" data-page="home">Accueil</a></li>
+          <li><a href="#" data-page="contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Légal</h4>
+        <ul>
+          <li><a href="#">Confidentialité</a></li>
+          <li><a href="#">Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Marquis AI Inc. · Tous droits réservés</span>
+      <span>Conçu à Montréal</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Reliable Client-Side Router -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Get all elements that trigger navigation
+    const navTriggers = document.querySelectorAll('[data-page]');
+    const pages = document.querySelectorAll('.page');
+    const nav = document.getElementById('mainNav');
+    let currentPageId = 'home';
+
+    function navigateTo(pageId) {
+      // Prevent duplicate navigations
+      if (pageId === currentPageId) return;
+      currentPageId = pageId;
+
+      const targetPage = document.getElementById('page-' + pageId);
+      if (!targetPage) return;
+
+      // Update Nav Active State
+      document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
+      const activeLink = document.querySelector(`.nav-links [data-page="${pageId}"]`);
+      if (activeLink) activeLink.classList.add('active');
+
+      // Handle Nav styling based on page background
+      if (pageId === 'home') {
+        nav.classList.add('dark-mode');
+      } else {
+        nav.classList.remove('dark-mode');
+      }
+
+      // Fade out current page
+      const activePage = document.querySelector('.page.visible');
+      if (activePage) {
+        activePage.classList.remove('visible');
+        
+        // Wait for fade out, then switch
+        setTimeout(() => {
+          pages.forEach(p => p.classList.remove('active'));
+          targetPage.classList.add('active');
+          
+          // Force reflow to restart CSS transition
+          void targetPage.offsetWidth; 
+          
+          // Fade in new page
+          targetPage.classList.add('visible');
+          
+          // Scroll to top instantly
+          window.scrollTo({ top: 0, behavior: 'instant' });
+        }, 300); // Match CSS transition duration
+      } else {
+        // Fallback if no page is currently visible
+        pages.forEach(p => p.classList.remove('active'));
+        targetPage.classList.add('active');
+        void targetPage.offsetWidth;
+        targetPage.classList.add('visible');
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
+    }
+
+    // Attach click events to ALL links with data-page
+    navTriggers.forEach(trigger => {
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        const pageId = trigger.getAttribute('data-page');
+        navigateTo(pageId);
+      });
+    });
+
+    // Initialize dark mode for home page
+    nav.classList.add('dark-mode');
+  });
+
+  // Form Handling
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const originalText = btn.innerText;
+    btn.innerText = 'Envoi en cours...';
+    btn.disabled = true;
+    btn.style.opacity = '0.7';
+    btn.style.cursor = 'not-allowed';
+
+    setTimeout(() => {
+      btn.innerText = '✓ Demande envoyée avec succès';
+      btn.style.background = '#16a34a';
+      btn.style.borderColor = '#16a34a';
+      btn.style.opacity = '1';
+      btn.style.cursor = 'default';
+      
+      setTimeout(() => {
+        btn.innerText = originalText;
+        btn.disabled = false;
+        btn.style.background = '';
+        btn.style.borderColor = '';
+        btn.style.opacity = '';
+        btn.style.cursor = '';
+        this.reset();
+      }, 2500);
+    }, 1200);
+  });
+</script>
+
+</body>
+</html>
