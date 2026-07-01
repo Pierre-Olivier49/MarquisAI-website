@@ -266,17 +266,19 @@
     <div class="container">
       <div class="voice-demo-box">
         <p class="mono" style="margin-bottom: 1rem; color: var(--accent-dark-bg);" data-i18n="voice.demo_tag">Essayez-le</p>
-        <h2 style="color: #fff; margin-bottom: 1rem;" data-i18n="voice.demo_title">Testez l'agent en direct</h2>
-        <p style="color: rgba(255,255,255,0.5); font-size: 0.95rem;" data-i18n="voice.demo_desc">Simulation d'un appel entrant. Voyez comment l'agent gère une prise de rendez-vous.</p>
+        <h2 style="color: #fff; margin-bottom: 1rem;" data-i18n="voice.demo_title">Écoutez l'agent en action</h2>
+        <p style="color: rgba(255,255,255,0.5); font-size: 0.95rem;" data-i18n="voice.demo_desc">Un exemple réel d'appel, entièrement pris en charge par notre agent vocal IA.</p>
 
-        <div class="voice-demo-phone">
-          <div class="voice-demo-avatar">📞</div>
-          <div class="voice-demo-status" id="voiceDemoStatus" data-i18n="voice.demo_status_idle">Appuyez pour simuler un appel</div>
-          <div class="voice-demo-wave" id="voiceDemoWave">
+        <div class="voice-audio-player">
+          <div class="voice-audio-avatar" aria-hidden="true">🎧</div>
+          <div class="voice-audio-wave" id="voiceAudioWave" aria-hidden="true">
             <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
           </div>
-          <button class="voice-demo-btn voice-demo-call" id="voiceDemoBtn" aria-label="Simuler un appel">📞</button>
-          <div class="voice-demo-transcript" id="voiceDemoTranscript"></div>
+          <button class="voice-audio-btn" id="voiceAudioBtn" type="button" aria-label="Écouter la démo">
+            <span id="voiceAudioIcon" aria-hidden="true">▶</span>
+          </button>
+          <p class="voice-audio-caption" data-i18n="voice.demo_status_idle">Appuyez sur play pour écouter.</p>
+          <audio id="voiceAudioEl" src="./demo_voice_adam_EL.mp3" preload="none"></audio>
         </div>
 
         <div class="voice-channels">
@@ -717,6 +719,7 @@
 
 <!-- App (ES module) -->
 <script type="module" src="js/app.js"></script>
+<script src="js/voice-audio-player.js"></script>
 
 </body>
 </html>
