@@ -1,305 +1,18 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Marquis AI — Intelligence artificielle pour entreprises québécoises</title>
-<meta name="description" content="Studio d'IA montréalais. Agent vocal, Optimisation pour moteurs génératifs (GEO), et LLM interne sécurisé." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" />
-<style>
-:root {
-  --bg: #F5F5F7;
-  --bg-dark: #0A0A0A;
-  --bg-card: #FFFFFF;
-  --text: #111111;
-  --text-light: #F5F5F7;
-  --text-secondary: #555555;
-  --text-muted: #888888;
-  --border: #E0E0E0;
-  --accent: #E31937;
-  --accent-hover: #C41530;
-  --accent-dark-bg: #FF2D4B;
-  --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marquis AI — Intelligence artificielle pour entreprises québécoises</title>
+  <meta name="description" content="Studio d'IA montréalais. Agent vocal, Optimisation pour moteurs génératifs (GEO), et LLM interne sécurisé." />
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" />
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-
-a { color: inherit; text-decoration: none; transition: color var(--transition); cursor: pointer; }
-img { max-width: 100%; display: block; }
-::selection { background: var(--accent); color: #fff; }
-
-.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-
-h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
-h1 { font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 2rem; }
-h2 { font-size: clamp(2rem, 4vw, 3.2rem); margin-bottom: 1.5rem; }
-h3 { font-size: 1.4rem; margin-bottom: 1rem; }
-p { color: var(--text-secondary); margin-bottom: 1.25rem; }
-.mono { font-family: 'Inter', monospace; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); }
-
-.btn {
-  display: inline-flex; align-items: center; gap: 0.6rem;
-  padding: 1rem 2rem; border-radius: 0px; font-size: 0.9rem; font-weight: 600;
-  transition: all var(--transition); border: 2px solid transparent; cursor: pointer;
-  font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 0.05em;
-}
-.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
-.btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(227, 25, 55, 0.25); }
-.btn-secondary { background: transparent; color: var(--text); border-color: var(--text); }
-.btn-secondary:hover { background: var(--text); color: var(--bg); }
-
-/* --- Nav --- */
-.nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(245, 245, 247, 0.9); backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  transition: background var(--transition), border-color var(--transition);
-}
-.nav.dark-mode { background: rgba(10, 10, 10, 0.95); border-color: rgba(255,255,255,0.1); }
-.nav.dark-mode .nav-links > a, .nav.dark-mode .nav-logo, .nav.dark-mode .dropdown-toggle { color: var(--text-light); }
-.nav.dark-mode .nav-links > a:hover, .nav.dark-mode .nav-links > a.active, .nav.dark-mode .dropdown-toggle:hover { color: var(--accent-dark-bg); }
-.nav.dark-mode .dropdown-menu { background: var(--bg-dark); border-color: rgba(255,255,255,0.1); }
-.nav.dark-mode .dropdown-menu a { color: rgba(255,255,255,0.7); }
-.nav.dark-mode .dropdown-menu a:hover { color: #fff; background: rgba(255,255,255,0.05); }
-.nav.dark-mode .hamburger span { background: var(--text-light); }
-
-.nav-inner { display: flex; justify-content: space-between; align-items: center; height: 72px; }
-.nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; display: flex; align-items: center; gap: 0.25rem; color: var(--text); }
-.nav-logo span { color: var(--accent); }
-.nav-links { display: flex; gap: 2.5rem; align-items: center; }
-.nav-links > a { font-size: 0.9rem; color: var(--text-secondary); font-weight: 500; position: relative; }
-.nav-links > a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--accent); transition: width var(--transition); }
-.nav-links > a:hover, .nav-links > a.active { color: var(--text); }
-.nav-links > a.active::after, .nav-links > a:hover::after { width: 100%; }
-.nav-cta { margin-left: 1rem; }
-
-/* Hamburger */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 28px;
-  height: 24px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  z-index: 101;
-}
-.hamburger span {
-  width: 100%;
-  height: 3px;
-  background: var(--text);
-  transition: all var(--transition);
-  transform-origin: center;
-}
-.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
-.hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
-
-/* Dropdown */
-.dropdown { position: relative; }
-.dropdown-toggle { font-size: 0.9rem; color: var(--text-secondary); font-weight: 500; display: flex; align-items: center; gap: 0.5rem; background: none; border: none; cursor: pointer; font-family: 'Inter', sans-serif; position: relative; }
-.dropdown-toggle::after { content: '▾'; font-size: 0.7rem; transition: transform var(--transition); }
-.dropdown:hover .dropdown-toggle::after { transform: rotate(180deg); }
-.dropdown:hover .dropdown-toggle { color: var(--text); }
-.dropdown-menu {
-  position: absolute; top: 100%; left: -1rem; min-width: 240px;
-  background: var(--bg-card); border: 1px solid var(--border);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  opacity: 0; visibility: hidden; transform: translateY(10px);
-  transition: all var(--transition); padding: 0.5rem 0; margin-top: 1rem; z-index: 999;
-}
-.dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
-.dropdown-menu a { display: block; padding: 0.85rem 1.5rem; font-size: 0.9rem; color: var(--text-secondary); transition: all 0.2s ease; }
-.dropdown-menu a:hover { background: var(--bg); color: var(--text); padding-left: 2rem; }
-
-/* --- Page System --- */
-.page { display: none; opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; padding-top: 72px; min-height: 100vh; }
-.page.active { display: block; }
-.page.visible { opacity: 1; transform: translateY(0); }
-
-/* --- Home Page --- */
-.hero { padding: 10rem 0 6rem; background: var(--bg-dark); color: var(--text-light); position: relative; overflow: hidden; margin-top: -72px; padding-top: calc(72px + 6rem); }
-.hero::before { content: ''; position: absolute; top: -50%; right: -20%; width: 800px; height: 800px; background: radial-gradient(circle, rgba(227,25,55,0.15) 0%, transparent 70%); pointer-events: none; }
-.hero h1 { max-width: 900px; }
-.hero h1 .accent { color: var(--accent-dark-bg); }
-.hero-sub { font-size: 1.2rem; max-width: 600px; color: rgba(255,255,255,0.7); margin-bottom: 3rem; line-height: 1.7; }
-.hero .btn-secondary { color: var(--text-light); border-color: rgba(255,255,255,0.3); }
-.hero .btn-secondary:hover { background: var(--text-light); color: var(--bg-dark); }
-
-.products-section { padding: 8rem 0; }
-.products-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; border-bottom: 2px solid var(--text); padding-bottom: 2rem; }
-.products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
-.product-card {
-  background: var(--bg-card); border: 1px solid var(--border); 
-  padding: 3rem 2.5rem; transition: all var(--transition); display: flex; flex-direction: column; position: relative;
-}
-.product-card:hover { background: var(--bg-dark); color: var(--text-light); z-index: 2; transform: scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
-.product-card:hover .card-num { color: var(--accent-dark-bg); }
-.product-card:hover .card-link { color: var(--accent-dark-bg); }
-.product-card:hover p { color: rgba(255,255,255,0.6); }
-.card-num { font-family: 'Space Grotesk', sans-serif; font-size: 4rem; font-weight: 700; color: var(--border); margin-bottom: 2rem; line-height: 1; transition: color var(--transition); }
-.card-body { flex: 1; }
-.card-link { margin-top: 2.5rem; font-size: 0.9rem; font-weight: 600; color: var(--accent); display: inline-flex; align-items: center; gap: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; transition: all var(--transition); }
-.card-link:hover { gap: 1rem; }
-
-.trust-strip { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-card); }
-.trust-item { padding: 3rem 2rem; border-right: 1px solid var(--border); text-align: center; }
-.trust-item:last-child { border-right: none; }
-.trust-num { font-family: 'Space Grotesk', sans-serif; font-size: 3rem; font-weight: 700; color: var(--text); display: block; line-height: 1; margin-bottom: 0.5rem; }
-.trust-num span { color: var(--accent); }
-.trust-label { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;}
-
-/* --- Mission Section --- */
-.mission-section { padding: 8rem 0; background: var(--bg-dark); color: var(--text-light); position: relative; overflow: hidden; }
-.mission-section::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 150px; background: linear-gradient(to top, var(--bg), transparent); pointer-events: none; }
-.mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; position: relative; z-index: 2; }
-.mission-text p { color: rgba(255,255,255,0.7); font-size: 1.15rem; line-height: 1.8; }
-.mission-values { display: flex; flex-direction: column; gap: 2rem; margin-top: 2rem; }
-.value-item { border-left: 3px solid var(--accent); padding-left: 2rem; }
-.value-item h4 { font-family: 'Space Grotesk', sans-serif; color: #fff; font-size: 1.1rem; margin-bottom: 0.5rem; }
-.value-item p { color: rgba(255,255,255,0.5); font-size: 0.95rem; margin: 0; }
-
-/* --- Product Pages --- */
-.prod-hero { padding: 6rem 0 5rem; background: var(--bg-dark); color: var(--text-light); margin-top: -72px; padding-top: calc(72px + 4rem); position: relative; }
-.prod-hero::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 150px; background: linear-gradient(to top, var(--bg), transparent); pointer-events: none; z-index: 1;}
-.prod-hero.no-fade::before { display: none; }
-.prod-hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; position: relative; z-index: 2; }
-.prod-hero h1 { margin-bottom: 1.5rem; }
-.prod-hero p { color: rgba(255,255,255,0.7); font-size: 1.1rem; }
-.prod-hero .btn-primary { margin-top: 2rem; }
-
-.prod-content { padding: 6rem 0; }
-.details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; }
-.detail-block { margin-bottom: 4rem; }
-.detail-block h3 { font-size: 1.6rem; color: var(--text); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
-.detail-block h3::before { content: ''; display: block; width: 40px; height: 4px; background: var(--accent); flex-shrink: 0; }
-
-.feature-list { list-style: none; margin-top: 2rem; background: var(--bg-card); border: 1px solid var(--border); padding: 0; }
-.feature-list li { padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 1.25rem; font-size: 0.95rem; color: var(--text-secondary); transition: background var(--transition); }
-.feature-list li:last-child { border-bottom: none; }
-.feature-list li:hover { background: #fafafa; }
-.feature-list li strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 0.2rem; }
-.check { color: var(--accent); font-weight: 800; font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
-
-/* --- FAQ Section --- */
-.faq-section { background: var(--bg-card); border-top: 1px solid var(--border); padding: 6rem 0; }
-.faq-list { max-width: 900px; margin: 0 auto; }
-.faq-item { border-bottom: 1px solid var(--border); }
-.faq-question { width: 100%; background: none; border: none; padding: 2rem 0; font-family: 'Inter', sans-serif; font-size: 1.05rem; font-weight: 600; color: var(--text); text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: color var(--transition); }
-.faq-question:hover { color: var(--accent); }
-.faq-icon { font-size: 1.5rem; font-weight: 300; transition: transform var(--transition); color: var(--accent); }
-.faq-item.active .faq-icon { transform: rotate(45deg); }
-.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; }
-.faq-answer p { padding: 0 0 2rem 0; color: var(--text-secondary); line-height: 1.7; }
-
-/* --- Contact Page --- */
-.contact-section { padding: 6rem 0 10rem; }
-.contact-grid { display: grid; grid-template-columns: 5fr 7fr; gap: 6rem; }
-.contact-info-item { margin-bottom: 3rem; }
-.contact-info-item label { display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 600; }
-.contact-info-item p { color: var(--text); margin: 0; font-size: 1.1rem; font-weight: 500; line-height: 1.5; }
-
-.form-card { background: var(--bg-card); border: 1px solid var(--border); padding: 3rem; box-shadow: 0 10px 40px rgba(0,0,0,0.03); }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-.form-group { margin-bottom: 1.5rem; }
-.form-group.full { grid-column: 1 / -1; }
-.form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text); }
-.form-control { width: 100%; padding: 1rem; border: 1px solid var(--border); border-radius: 0px; font-family: inherit; font-size: 0.95rem; background: var(--bg); color: var(--text); transition: border-color var(--transition), box-shadow var(--transition); outline: none; }
-.form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(227, 25, 55, 0.1); }
-textarea.form-control { resize: vertical; min-height: 120px; }
-select.form-control { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23888' d='M6 8L0 0h12z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; }
-
-/* --- Footer --- */
-.footer { background: var(--bg-dark); color: var(--text-light); padding: 6rem 0 3rem; }
-.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
-.footer p { color: rgba(255,255,255,0.5); font-size: 0.95rem; line-height: 1.7; }
-.footer h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 2rem; color: rgba(255,255,255,0.3); font-family: 'Inter', sans-serif; font-weight: 600;}
-.footer ul { list-style: none; }
-.footer ul li { margin-bottom: 1rem; }
-.footer ul a { color: rgba(255,255,255,0.6); font-size: 0.95rem; transition: color var(--transition); }
-.footer ul a:hover { color: #fff; }
-.footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 3rem; display: flex; justify-content: space-between; font-size: 0.8rem; color: rgba(255,255,255,0.3); }
-
-/* --- Responsive --- */
-@media (max-width: 900px) {
-  .nav-cta { display: none; }
-  .mobile-cta { display: inline-flex !important; width: 100%; justify-content: center; margin-top: 2rem; margin-left: 0; }
-  
-  .hamburger { display: flex; }
-  
-  .nav-links {
-    position: fixed;
-    top: 72px;
-    left: 0;
-    width: 100%;
-    height: calc(100vh - 72px);
-    background: var(--bg);
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 3rem 2rem;
-    gap: 1.5rem;
-    transform: translateX(-100%);
-    display: flex;
-    transition: transform var(--transition);
-    z-index: 99;
-    overflow-y: auto;
-    border-top: 1px solid var(--border);
-  }
-  
-  .nav.dark-mode .nav-links { background: var(--bg-dark); border-color: rgba(255,255,255,0.1); }
-  
-  .nav-links.active { transform: translateX(0); }
-  
-  .nav-links > a, .nav.dark-mode .nav-links > a, .dropdown-toggle { 
-    font-size: 1.2rem; 
-    text-transform: uppercase; 
-    letter-spacing: 0.05em; 
-    padding: 0.5rem 0;
-    width: 100%;
-  }
-  
-  .dropdown { width: 100%; }
-  .dropdown-menu {
-    position: static;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    box-shadow: none;
-    margin-top: 0.5rem;
-    padding: 0 0 0 1.5rem;
-    background: transparent;
-    border: none;
-    width: 100%;
-    display: none;
-  }
-  .dropdown.expanded .dropdown-menu { display: block; }
-  .dropdown-menu a { padding: 0.75rem 0; font-size: 1rem; }
-  
-  .products-grid { grid-template-columns: 1fr; }
-  .product-card:hover { transform: none; }
-  .trust-strip { grid-template-columns: 1fr 1fr; }
-  .trust-item { border-bottom: 1px solid var(--border); }
-  .prod-hero-grid, .details-grid, .contact-grid, .mission-grid { grid-template-columns: 1fr; gap: 3rem; }
-  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
-  .footer-bottom { flex-direction: column; gap: 1rem; }
-  .form-row { grid-template-columns: 1fr; }
-}
-</style>
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
 
@@ -308,23 +21,25 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   <div class="container nav-inner">
     <a href="#" class="nav-logo" data-page="home">Marquis <span>AI</span></a>
     <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span></span><span></span><span></span>
     </button>
     <div class="nav-links" id="navLinksContainer">
-      <a href="#" data-page="home" class="active">Accueil</a>
+      <a href="#" data-page="home" class="active" data-i18n="nav.home">Accueil</a>
       <div class="dropdown" id="dropdownContainer">
-        <button class="dropdown-toggle" id="dropdownToggle">Produits</button>
+        <button class="dropdown-toggle" id="dropdownToggle"><span data-i18n="nav.products">Produits</span> <span class="dropdown-chevron"></span></button>
         <div class="dropdown-menu">
-          <a href="#" data-page="voice">Agent Vocal IA</a>
-          <a href="#" data-page="geo">GEO (Moteurs IA)</a>
-          <a href="#" data-page="llm">LLM Interne</a>
+          <a href="#" data-page="voice" data-i18n="nav.voice">Agent Vocal IA</a>
+          <a href="#" data-page="geo" data-i18n="nav.geo">GEO (Moteurs IA)</a>
+          <a href="#" data-page="llm" data-i18n="nav.llm">LLM Interne</a>
         </div>
       </div>
-      <a href="#" data-page="about">À propos</a>
-      <a href="#" data-page="contact">Contact</a>
-      <a href="#" data-page="contact" class="btn btn-primary nav-cta mobile-cta">Démo gratuite</a>
+      <a href="#" data-page="about" data-i18n="nav.about">À propos</a>
+      <a href="#" data-page="contact" data-i18n="nav.contact">Contact</a>
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="fr">FR</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <a href="#" data-page="contact" class="btn btn-primary nav-cta mobile-cta" data-i18n="nav.cta">Démo gratuite</a>
     </div>
   </div>
 </nav>
@@ -335,12 +50,12 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 <div id="page-home" class="page active visible">
   <section class="hero">
     <div class="container">
-      <p class="mono" style="margin-bottom: 2rem;">Studio d'IA · Montréal</p>
-      <h1>L'IA qui travaille <br><span class="accent">pour votre entreprise.</span></h1>
-      <p class="hero-sub">Nous concevons des systèmes d'intelligence artificielle qui répondent à vos clients, optimisent votre visibilité dans les moteurs IA, et sécurisent vos données. Sans jargon, sans retard.</p>
+      <p class="mono" style="margin-bottom: 2rem;" data-i18n="home.tag">Studio d'IA · Montréal</p>
+      <h1><span data-i18n="home.hero1">Vos appels manqués</span><br><span class="accent" data-i18n="home.hero2">coûtent plus cher que nous.</span></h1>
+      <p class="hero-sub" data-i18n="home.sub">Un agent vocal qui répond quand vous ne pouvez pas. Un référencement taillé pour les moteurs IA. Un ChatGPT privé qui ne partage rien. Trois outils, une seule équipe à Montréal.</p>
       <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
-        <a href="#" data-page="contact" class="btn btn-primary">Démarrer un projet</a>
-        <a href="#produits-acc" class="btn btn-secondary">Découvrir les produits</a>
+        <a href="#" data-page="contact" class="btn btn-primary" data-i18n="home.cta1">Démarrer un projet</a>
+        <a href="#produits-acc" class="btn btn-secondary" data-i18n="home.cta2">Voir les produits</a>
       </div>
     </div>
   </section>
@@ -349,66 +64,63 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
     <div class="container">
       <div class="products-header">
         <div>
-          <p class="mono" style="margin-bottom: 1rem;">Nos produits</p>
-          <h2>Trois solutions.<br>Zéro compromis.</h2>
+          <p class="mono" style="margin-bottom: 1rem;" data-i18n="home.prod_tag">Ce qu'on fait</p>
+          <h2 data-i18n="home.prod_title">Trois problèmes.<br>Trois solutions.</h2>
         </div>
       </div>
-      
       <div class="products-grid">
         <div class="product-card">
-          <div class="card-num">01</div>
+          <img src="https://images.unsplash.com/photo-1556745753-b2904692b3cd?w=600&h=400&fit=crop" alt="Agent vocal" class="product-card-img" loading="lazy">
           <div class="card-body">
-            <h3>Agent Vocal IA</h3>
-            <p>Un standard téléphonique qui répond 24/7, prend les réservations et qualifie les leads sans aucune intervention humaine.</p>
-            <a href="#" data-page="voice" class="card-link">Voir le produit →</a>
+            <h3 data-i18n="home.card1_title">Agent Vocal IA</h3>
+            <p data-i18n="home.card1_desc">Répond au téléphone à votre place, prend les rendez-vous, et transfère les urgences. Aussi par texto et courriel.</p>
+            <a href="#" data-page="voice" class="card-link"><span data-i18n="home.card_link">En savoir plus</span> →</a>
           </div>
         </div>
-        
         <div class="product-card">
-          <div class="card-num">02</div>
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop" alt="GEO" class="product-card-img" loading="lazy">
           <div class="card-body">
-            <h3>GEO (Génération Engine Opt.)</h3>
-            <p>Soyez cité par ChatGPT, Perplexity et Google AI. Le référencement de la nouvelle génération de moteurs de recherche.</p>
-            <a href="#" data-page="geo" class="card-link">Voir le produit →</a>
+            <h3 data-i18n="home.card2_title">GEO — Moteurs IA</h3>
+            <p data-i18n="home.card2_desc">Quand quelqu'un demande « meilleur plombier à Montréal » à ChatGPT, c'est votre nom qui sort. Le référencement nouvelle génération.</p>
+            <a href="#" data-page="geo" class="card-link"><span data-i18n="home.card_link">En savoir plus</span> →</a>
           </div>
         </div>
-
         <div class="product-card">
-          <div class="card-num">03</div>
+          <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop" alt="LLM Interne" class="product-card-img" loading="lazy">
           <div class="card-body">
-            <h3>LLM Interne Sécurisé</h3>
-            <p>Un ChatGPT privé hébergé chez vous. Vos employés utilisent l'IA sans que vos données confidentielles ne quittent vos serveurs.</p>
-            <a href="#" data-page="llm" class="card-link">Voir le produit →</a>
+            <h3 data-i18n="home.card3_title">LLM Interne Sécurisé</h3>
+            <p data-i18n="home.card3_desc">Un ChatGPT privé installé sur vos serveurs. Vos employés posent des questions, l'IA répond — et vos données restent chez vous.</p>
+            <a href="#" data-page="llm" class="card-link"><span data-i18n="home.card_link">En savoir plus</span> →</a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Automatisation Section (remplace l'ancienne mission) -->
+  <!-- Automation Section -->
   <section class="mission-section">
     <div class="container">
       <div class="mission-grid">
         <div>
-          <p class="mono" style="margin-bottom: 1.5rem; color: var(--accent-dark-bg);">Automatisation</p>
-          <h2 style="color: #fff; margin-bottom: 2rem;">L'IA qui prend le relais,<br>pas votre place.</h2>
+          <p class="mono" style="margin-bottom: 1.5rem; color: var(--accent-dark-bg);" data-i18n="home.auto_tag">Le problème</p>
+          <h2 style="color: #fff; margin-bottom: 2rem;" data-i18n="home.auto_title">Vos employés font du travail<br>que des machines devraient faire.</h2>
           <div class="mission-text">
-            <p>Vos employés passent des heures à répondre aux mêmes questions, prendre les mêmes rendez-vous, transférer les mêmes appels. Ce sont des tâches essentielles — mais répétitives, épuisantes, et qui éloignent votre équipe de ce qui compte vraiment : la relation client, l'expertise, la croissance.</p>
-            <p>Nos systèmes d'intelligence artificielle prennent en charge ces tâches répétitives. L'agent vocal répond pendant que vous êtes en réunion. Le GEO attire des clients pendant que vous dormez. Le LLM interne retrouve l'information en secondes au lieu de minutes. Votre équipe gagne du temps, vos clients gagnent en disponibilité.</p>
+            <p data-i18n="home.auto_p1">Répondre aux mêmes questions au téléphone. Fouiller dans 200 fichiers pour retrouver un contrat. Attendre qu'un client tombe sur votre site par hasard. Ce n'est pas du travail stratégique — c'est du temps qui brûle.</p>
+            <p data-i18n="home.auto_p2">Nos trois produits couvrent les trois scénarios : l'agent vocal prend les appels pendant que vous travaillez, le GEO ramène des clients pendant que vous dormez, le LLM retrouve l'information en secondes au lieu de minutes.</p>
           </div>
         </div>
         <div class="mission-values">
           <div class="value-item">
-            <h4>Appels et réservations automatisés</h4>
-            <p>Plus aucun appel manqué. L'agent vocal prend les rendez-vous, répond aux questions fréquentes et libère votre réceptionniste pour les interactions qui demandent un jugement humain.</p>
+            <h4 data-i18n="home.val1_title">Plus d'appels manqués</h4>
+            <p data-i18n="home.val1_desc">L'agent prend les rendez-vous, répond aux questions récurrentes, et libère votre réceptionniste pour les cas qui demandent un humain.</p>
           </div>
           <div class="value-item">
-            <h4>Recherche et rédaction accélérées</h4>
-            <p>Le LLM interne retrouve l'information dans vos documents en secondes, rédige des brouillons, résume des dossiers. Vos employés ne fouillent plus dans des dizaines de fichiers.</p>
+            <h4 data-i18n="home.val2_title">Recherche instantanée</h4>
+            <p data-i18n="home.val2_desc">Le LLM interne retrouve un paragraphe précis dans un dossier de 300 pages en 2 secondes. Plus de fouille manuelle.</p>
           </div>
           <div class="value-item">
-            <h4>Acquisition de clients en continu</h4>
-            <p>Le GEO vous place là où vos clients cherchent — dans les réponses des moteurs IA. L'acquisition de nouveaux clients devient continue, sans intervention manuelle de votre équipe.</p>
+            <h4 data-i18n="home.val3_title">Clients en continu</h4>
+            <p data-i18n="home.val3_desc">Le GEO vous place dans les réponses des moteurs IA. Les clients arrivent sans que vous leviez le petit doigt.</p>
           </div>
         </div>
       </div>
@@ -416,10 +128,10 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   </section>
 
   <div class="trust-strip">
-    <div class="trust-item"><span class="trust-num">24<span>/</span>7</span><span class="trust-label">Disponibilité</span></div>
-    <div class="trust-item"><span class="trust-num">100<span>%</span></span><span class="trust-label">Données au Québec</span></div>
-    <div class="trust-item"><span class="trust-num">&lt;2<span>s</span></span><span class="trust-label">Temps de réponse</span></div>
-    <div class="trust-item"><span class="trust-num">0</span><span class="trust-label">Ligne de code à écrire</span></div>
+    <div class="trust-item"><span class="trust-num">24<span>/</span>7</span><span class="trust-label" data-i18n="home.trust1">Disponibilité</span></div>
+    <div class="trust-item"><span class="trust-num">100<span>%</span></span><span class="trust-label" data-i18n="home.trust2">Données au Canada</span></div>
+    <div class="trust-item"><span class="trust-num">&lt;2<span>s</span></span><span class="trust-label" data-i18n="home.trust3">Temps de réponse</span></div>
+    <div class="trust-item"><span class="trust-num">0</span><span class="trust-label" data-i18n="home.trust4">Ligne de code à écrire</span></div>
   </div>
 </div>
 
@@ -431,72 +143,69 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
     <div class="container">
       <div class="prod-hero-grid">
         <div>
-          <p class="mono" style="margin-bottom: 1.5rem;">À propos</p>
-          <h1>Studio d'IA<br>montréalais.</h1>
-          <p>Marquis AI est un studio d'intelligence artificielle basé à Montréal, dédié aux entreprises québécoises. Nous concevons, déployons et maintenons des systèmes d'IA qui travaillent en silence, derrière les opérations de nos clients.</p>
-          <a href="#" data-page="contact" class="btn btn-primary">Travailler avec nous</a>
+          <p class="mono" style="margin-bottom: 1.5rem;" data-i18n="about.tag">À propos</p>
+          <h1 data-i18n="about.title">On construit des<br>outils qui disparaissent.</h1>
+          <p data-i18n="about.desc">Marquis AI est un studio d'intelligence artificielle à Montréal. On travaille avec des PME, des cliniques, des cabinets et des restaurants. Notre job : installer des systèmes qui font le travail en silence, sans que vos clients s'en rendent compte.</p>
+          <a href="#" data-page="contact" class="btn btn-primary" data-i18n="about.cta">Nous contacter</a>
+        </div>
+        <div>
+          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=450&fit=crop" alt="Bureau Montréal" class="prod-hero-img" loading="lazy">
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Mission (déplacée depuis l'accueil) -->
-  <section class="mission-section" style="padding-top: 2rem;">
+  <section class="mission-section no-gradient" style="padding-top: 2rem;">
     <div class="container">
       <div class="mission-grid">
         <div>
-          <p class="mono" style="margin-bottom: 1.5rem; color: var(--accent-dark-bg);">Notre mission</p>
-          <h2 style="color: #fff; margin-bottom: 2rem;">Rendre l'IA invisible et indispensable.</h2>
+          <p class="mono" style="margin-bottom: 1.5rem; color: var(--accent-dark-bg);" data-i18n="about.mission_tag">Notre approche</p>
+          <h2 style="color: #fff; margin-bottom: 2rem;" data-i18n="about.mission_title">Si ça ne règle pas un vrai problème,<br>on ne le déploie pas.</h2>
           <div class="mission-text">
-            <p>Nous croyons que l'intelligence artificielle devrait disparaître derrière l'efficacité qu'elle apporte. Un client qui appelle ne doit pas savoir qu'il parle à une machine — il doit seulement sentir qu'il a été compris, rapidement, poliment, correctement.</p>
-            <p>Nous sommes basés à Montréal et nous servons exclusivement les entreprises du Québec. Notre rôle n'est pas de vous impressionner avec de la technologie, mais de vous aider à grandir sans complexifier vos opérations.</p>
+            <p data-i18n="about.mission_p1">On ne vend pas de la technologie pour impressionner. On s'assoit avec vous une journée, on observe comment votre entreprise fonctionne, et on identifie les tâches qui brûlent du temps sans raison. Après, on propose une solution — et c'est souvent plus simple que ce que vous imaginiez.</p>
+            <p data-i18n="about.mission_p2">On reste après l'installation. Un système d'IA évolue avec votre entreprise : on l'ajuste, on le met à jour, on répond quand ça plante. Pas de frais cachés, pas de contrat qui vous verrouille pendant trois ans.</p>
           </div>
         </div>
         <div class="mission-values">
           <div class="value-item">
-            <h4>Efficacité avant tout</h4>
-            <p>Si un système ne résout pas un problème concret, nous ne le déployons pas. Pas de gadgets, uniquement des résultats mesurables.</p>
+            <h4 data-i18n="about.v1_title">Résultats mesurables</h4>
+            <p data-i18n="about.v1_desc">On ne déploie rien qu'on ne peut pas mesurer. Chaque système a des métriques claires dès le premier mois.</p>
           </div>
           <div class="value-item">
-            <h4>Souveraineté des données</h4>
-            <p>Vos données appartiennent à votre entreprise. Nous ne les revendons pas, ne les partageons pas, et ne les hébergeons jamais à l'extérieur du Québec sans votre consentement explicite.</p>
+            <h4 data-i18n="about.v2_title">Données souveraines</h4>
+            <p data-i18n="about.v2_desc">Vos données restent chez vous. On ne les revend pas, on ne les héberge pas à l'étranger. Conforme à la Loi 25.</p>
           </div>
           <div class="value-item">
-            <h4>Accessibilité B2B</h4>
-            <p>L'IA n'est pas réservée aux grandes corporations. Nos solutions sont conçues pour les PME, les cliniques, les restaurants et les cabinets professionnels.</p>
+            <h4 data-i18n="about.v3_title">Fait pour les PME</h4>
+            <p data-i18n="about.v3_desc">Nos prix et nos processus sont conçus pour des équipes de 5 à 200 personnes, pas des multinationales.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Approche -->
   <section class="prod-content">
     <div class="container">
       <div class="details-grid">
         <div>
           <div class="detail-block">
-            <h3>Notre approche</h3>
-            <p>Nous ne vendons pas de produits, nous résolvons des problèmes. Chaque engagement commence par une analyse approfondie de vos opérations : où sont les goulots d'étranglement, où sont les tâches répétitives, où sont les opportunités d'automatisation. Ensuite seulement, nous proposons une solution — et ce n'est pas toujours la même.</p>
+            <h3 data-i18n="about.approach_title">Comment on travaille</h3>
+            <p data-i18n="about.approach_desc">On commence par une journée d'observation dans votre entreprise. On note les goulots d'étranglement, les tâches répétitives, les appels manqués, les recherches qui prennent trop de temps. Ensuite on vous propose un plan clair avec un budget fixe et un calendrier réaliste.</p>
           </div>
           <div class="detail-block">
-            <h3>Pourquoi Montréal</h3>
-            <p>Montréal est l'un des pôles mondiaux de la recherche en intelligence artificielle. Nous recrutons parmi les meilleurs talents de l'Université de Montréal, McGill et Polytechnique. Mais notre ancrage local ne signifie pas du localisme : nous déployons des technologies à la pointe mondiale, adaptées au contexte québécois.</p>
-          </div>
-          <div class="detail-block">
-            <h3>Notre engagement</h3>
-            <p>Nous restons après l'installation. Un système d'IA n'est pas un produit qu'on livre et qu'on oublie — c'est un outil qui apprend, qui s'ajuste, qui évolue avec votre entreprise. Notre accompagnement est continu, transparent et sans frais cachés.</p>
+            <h3 data-i18n="about.why_mtl_title">Pourquoi Montréal</h3>
+            <p data-i18n="about.why_mtl_desc">Montréal est un pôle mondial de recherche en IA. On recrute parmi les meilleurs talents locaux et on déploie des technologies de pointe adaptées au marché québécois — en français, en anglais, et dans le respect des lois d'ici.</p>
           </div>
         </div>
         <div>
-          <h3 style="margin-bottom: 1.5rem; font-size: 1.4rem;">Nos principes</h3>
+          <h3 style="margin-bottom: 1.5rem; font-size: 1.4rem;" data-i18n="about.principles_title">Nos engagements</h3>
           <ul class="feature-list">
-            <li><span class="check">+</span> <div><strong>Écoute avant action</strong>Une journée d'observation dans votre entreprise avant toute proposition.</div></li>
-            <li><span class="check">+</span> <div><strong>Déploiement rapide</strong>Des semaines, pas des mois. Vos opérations ne s'arrêtent pas.</div></li>
-            <li><span class="check">+</span> <div><strong>Transparence totale</strong>Vous comprenez chaque composante de ce que vous achetez.</div></li>
-            <li><span class="check">+</span> <div><strong>Support continu</strong>Nous restons présents bien après la mise en service.</div></li>
-            <li><span class="check">+</span> <div><strong>Données souveraines</strong>Tout reste au Québec. Conforme à la Loi 25.</div></li>
-            <li><span class="check">+</span> <div><strong>Prix honnêtes</strong>Pas de frais cachés, pas de verrouillage contractuel.</div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="about.p1_t">Écoute d'abord</strong><span data-i18n="about.p1_d">Une journée dans vos opérations avant toute proposition.</span></div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="about.p2_t">Livraison rapide</strong><span data-i18n="about.p2_d">Des semaines, pas des mois. Vos opérations ne s'arrêtent pas.</span></div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="about.p3_t">Transparence totale</strong><span data-i18n="about.p3_d">Vous comprenez ce que vous achetez. Chaque composante est expliquée.</span></div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="about.p4_t">Support continu</strong><span data-i18n="about.p4_d">On reste présents bien après la mise en service.</span></div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="about.p5_t">Conforme Loi 25</strong><span data-i18n="about.p5_d">Données hébergées au Canada. Documentation d'audit incluse.</span></div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="about.p6_t">Prix clairs</strong><span data-i18n="about.p6_d">Pas de frais cachés. Pas de verrouillage contractuel.</span></div></li>
           </ul>
         </div>
       </div>
@@ -512,10 +221,13 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
     <div class="container">
       <div class="prod-hero-grid">
         <div>
-          <p class="mono" style="margin-bottom: 1.5rem;">Produit 01</p>
-          <h1>Agent Vocal IA</h1>
-          <p>Un réceptionniste virtuel qui ne dort jamais, ne prend jamais de congé, et ne rate aucun appel entrant.</p>
-          <a href="#" data-page="contact" class="btn btn-primary">Demander une démo</a>
+          <p class="mono" style="margin-bottom: 1.5rem;" data-i18n="voice.tag">Agent Vocal IA</p>
+          <h1 data-i18n="voice.title">Il répond au téléphone.<br>Vous, vous travaillez.</h1>
+          <p data-i18n="voice.desc">Un réceptionniste virtuel qui prend les appels, les textos et les courriels entrants. Il prend les rendez-vous, répond aux questions courantes, et transfère les cas complexes à votre équipe.</p>
+          <a href="#" data-page="contact" class="btn btn-primary" data-i18n="voice.cta">Demander une démo</a>
+        </div>
+        <div>
+          <img src="https://images.unsplash.com/photo-1596524430615-b46475ddff6e?w=600&h=450&fit=crop" alt="Agent vocal" class="prod-hero-img" loading="lazy">
         </div>
       </div>
     </div>
@@ -526,24 +238,51 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
       <div class="details-grid">
         <div>
           <div class="detail-block">
-            <h3>Le problème</h3>
-            <p>Chaque appel manqué est un client perdu. Les entreprises québécoises perdent des milliers de dollars parce qu'elles ne peuvent pas répondre au téléphone pendant les heures de pointe, les lunchs ou en dehors des heures d'ouverture. La croissance souffre d'un goulot d'étranglement évitable.</p>
+            <h3 data-i18n="voice.problem_title">Le problème</h3>
+            <p data-i18n="voice.problem_desc">Chaque appel manqué, c'est un client qui va chez votre compétiteur. Les heures de pointe, les lunchs, les soirs, les fins de semaine — personne ne répond. Pendant ce temps, le téléphone sonne dans le vide et votre chiffre d'affaires s'en ressent.</p>
           </div>
           <div class="detail-block">
-            <h3>La solution Marquis AI</h3>
-            <p>Notre agent vocal répond instantanément. Il est formé spécifiquement sur vos services, vos tarifs et vos horaires. Il prend les réservations en temps réel, envoie un SMS de confirmation et transfère uniquement les cas complexes à votre équipe. Vous ne perdez plus jamais une opportunité.</p>
+            <h3 data-i18n="voice.solution_title">Ce qu'on installe</h3>
+            <p data-i18n="voice.solution_desc">Un agent entraîné sur vos services, vos prix et vos horaires. Il répond en moins de 3 secondes, en français ou en anglais. Il prend les réservations en temps réel, envoie un SMS de confirmation au client, et transfère les urgences à votre équipe. Tout est loggé et accessible dans un tableau de bord.</p>
           </div>
         </div>
         <div>
-          <h3 style="margin-bottom: 1.5rem; font-size: 1.4rem;">Fonctionnalités clés</h3>
+          <h3 style="margin-bottom: 1.5rem; font-size: 1.4rem;" data-i18n="voice.features_title">Ce qui est inclus</h3>
           <ul class="feature-list">
-            <li><span class="check">+</span> <div><strong>Réponse instantanée</strong>Moins de 3 secondes de délai, 24 heures sur 24.</div></li>
-            <li><span class="check">+</span> <div><strong>Prise de rendez-vous</strong>Synchronisation directe avec votre agenda et CRM.</div></li>
-            <li><span class="check">+</span> <div><strong>Bilingue natif</strong>Basculage fluide entre français et anglais.</div></li>
-            <li><span class="check">+</span> <div><strong>SVI intelligent</strong>Transfert automatique vers les bons départements.</div></li>
-            <li><span class="check">+</span> <div><strong>Suivi automatisé</strong>Confirmation et rappels par SMS 24h avant.</div></li>
-            <li><span class="check">+</span> <div><strong>Tableaux de bord</strong>Logs détaillés et analytics de chaque interaction.</div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="voice.f1_t">Réponse instantanée</strong><span data-i18n="voice.f1_d">Moins de 3 secondes, 24h/24, 7j/7.</span></div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="voice.f2_t">Voix, texto et courriel</strong><span data-i18n="voice.f2_d">Un seul agent gère les trois canaux de communication.</span></div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="voice.f3_t">Prise de rendez-vous</strong><span data-i18n="voice.f3_d">Synchronisation directe avec votre agenda et votre CRM.</span></div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="voice.f4_t">Bilingue natif</strong><span data-i18n="voice.f4_d">Français québécois et anglais, avec basculage fluide en plein appel.</span></div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="voice.f5_t">Transfert intelligent</strong><span data-i18n="voice.f5_d">Les cas complexes sont envoyés au bon membre de votre équipe.</span></div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="voice.f6_t">Rappels automatiques</strong><span data-i18n="voice.f6_d">Confirmation et rappel par SMS 24h avant le rendez-vous.</span></div></li>
           </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Voice Demo -->
+  <section class="voice-demo-section">
+    <div class="container">
+      <div class="voice-demo-box">
+        <p class="mono" style="margin-bottom: 1rem; color: var(--accent-dark-bg);" data-i18n="voice.demo_tag">Essayez-le</p>
+        <h2 style="color: #fff; margin-bottom: 1rem;" data-i18n="voice.demo_title">Testez l'agent en direct</h2>
+        <p style="color: rgba(255,255,255,0.5); font-size: 0.95rem;" data-i18n="voice.demo_desc">Simulation d'un appel entrant. Voyez comment l'agent gère une prise de rendez-vous.</p>
+
+        <div class="voice-demo-phone">
+          <div class="voice-demo-avatar">📞</div>
+          <div class="voice-demo-status" id="voiceDemoStatus" data-i18n="voice.demo_status_idle">Appuyez pour simuler un appel</div>
+          <div class="voice-demo-wave" id="voiceDemoWave">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <button class="voice-demo-btn voice-demo-call" id="voiceDemoBtn" aria-label="Simuler un appel">📞</button>
+          <div class="voice-demo-transcript" id="voiceDemoTranscript"></div>
+        </div>
+
+        <div class="voice-channels">
+          <div class="voice-channel"><div class="voice-channel-icon">📞</div> <span data-i18n="voice.channel_voice">Voix</span></div>
+          <div class="voice-channel"><div class="voice-channel-icon">💬</div> <span data-i18n="voice.channel_text">Texto / SMS</span></div>
+          <div class="voice-channel"><div class="voice-channel-icon">✉️</div> <span data-i18n="voice.channel_email">Courriel</span></div>
         </div>
       </div>
     </div>
@@ -552,19 +291,17 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   <!-- FAQ Voice -->
   <section class="faq-section">
     <div class="container">
-      <p class="mono" style="margin-bottom: 1rem;">Questions fréquentes</p>
-      <h2>FAQ : Agent Vocal IA</h2>
+      <p class="mono" style="margin-bottom: 1rem;" data-i18n="voice.faq_tag">Questions fréquentes</p>
+      <h2 data-i18n="voice.faq_title">FAQ — Agent Vocal IA</h2>
       <div class="faq-list" style="margin-top: 3rem;">
-        <div class="faq-item"><button class="faq-question">L'agent vocal sonne-t-il comme un robot ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Non. Nous utilisons les modèles de synthèse vocale les plus avancés du marché. La voix est naturelle, fluide, et gère les intonations. La plupart de vos clients ne remarqueront pas qu'ils parlent à une IA, surtout lors d'interactions courtes comme la prise de rendez-vous.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Est-ce que ça fonctionne en français québécois ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Absolument. Le modèle est entraîné et ajusté pour comprendre les accents, les expressions et le vocabulaire spécifiques au Québec (ex: "dépanneur", "blonde", etc.). Il répond également parfaitement en anglais si le client commute de langue en plein appel.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Combien de temps prend l'installation ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Généralement entre 3 et 7 jours ouvrables. Cela inclut l'analyse de vos processus actuels, la configuration de l'agent, l'intégration à votre système de réservation et les tests en conditions réelles avant le lancement.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Que se passe-t-il si le client a une question très complexe ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>L'agent est programmé pour reconnaître ses limites. Si la demande dépasse son champ d'action (ex: urgence médicale, demande technique très spécifique), il transfère immédiatement l'appel à un humain de votre équipe de manière transparente.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Dois-je changer mon numéro de téléphone ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Dans la grande majorité des cas, non. Nous nous branchons directement sur votre ligne téléphonique existante (ou votre système VoIP actuel) via un transfert d'appel ou une intégration SIP. Vos clients continuent d'appeler votre numéro habituel.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Est-ce compatible avec mon CRM (ex: Jobber, Mindbody, Cliniko) ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Oui. Nous avons des intégrations prêtes à l'emploi pour les CRM les plus populaires. Si vous utilisez un système sur mesure ou moins connu, notre équipe technique créera le pont nécessaire via API.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Comment sont gérées les données des appels ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Les appels sont traités et stockés sur des serveurs canadiens. Les transcriptions et les enregistrements (si activés) sont chiffrés. Nous sommes conformes à la Loi 25 sur la protection des données privées au Québec.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Quel est le retour sur investissement (ROI) typique ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Le ROI se mesure dès le premier mois. Si vous ratez actuellement 20 appels par semaine représentant 1000$ de chiffre d'affaires, le système se paie souvent en quelques jours. Nos clients constatent en moyenne une augmentation de 30 à 40% de leurs captures de leads.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Y a-t-il des frais cachés ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Non. Nous fonctionnons avec un modèle d'abonnement mensuel transparent qui inclut l'utilisation, la maintenance, les mises à jour de l'IA et le support. Les coûts des appels téléphoniques (si applicables selon votre opérateur) sont les seuls frais externes.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Peut-on couper le système la nuit ou la fin de semaine ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>C'est vous qui décidez. L'agent peut être actif 24/7, ou uniquement pendant vos heures de fermeture, ou encore uniquement quand votre ligne principale est occupée. La configuration horaire est totalement flexible.</p></div></div>
+        <div class="faq-item"><button class="faq-question"><span data-i18n="voice.faq1_q">Est-ce que ça sonne comme un robot ?</span><span class="faq-icon"></span></button><div class="faq-answer"><p data-i18n="voice.faq1_a">Non. On utilise les modèles de synthèse vocale les plus avancés du marché. La voix est naturelle et gère les intonations. La plupart des appelants ne remarquent pas la différence, surtout pour des interactions courtes comme une prise de rendez-vous.</p></div></div>
+        <div class="faq-item"><button class="faq-question"><span data-i18n="voice.faq2_q">Ça comprend le français québécois ?</span><span class="faq-icon"></span></button><div class="faq-answer"><p data-i18n="voice.faq2_a">Oui. Le modèle est ajusté pour les accents, les expressions et le vocabulaire d'ici. Il bascule aussi en anglais si le client change de langue en plein appel.</p></div></div>
+        <div class="faq-item"><button class="faq-question"><span data-i18n="voice.faq3_q">Combien de temps pour l'installation ?</span><span class="faq-icon"></span></button><div class="faq-answer"><p data-i18n="voice.faq3_a">Entre 3 et 7 jours ouvrables. Ça inclut l'analyse de vos processus, la configuration de l'agent, l'intégration à votre système de réservation et les tests en conditions réelles.</p></div></div>
+        <div class="faq-item"><button class="faq-question"><span data-i18n="voice.faq4_q">Et si la question est trop complexe ?</span><span class="faq-icon"></span></button><div class="faq-answer"><p data-i18n="voice.faq4_a">L'agent reconnaît ses limites. Si la demande dépasse son champ d'action, il transfère l'appel à un humain de votre équipe de manière transparente.</p></div></div>
+        <div class="faq-item"><button class="faq-question"><span data-i18n="voice.faq5_q">Dois-je changer mon numéro de téléphone ?</span><span class="faq-icon"></span></button><div class="faq-answer"><p data-i18n="voice.faq5_a">Non. On se branche sur votre ligne existante via un transfert d'appel ou une intégration SIP. Vos clients continuent d'appeler le même numéro.</p></div></div>
+        <div class="faq-item"><button class="faq-question"><span data-i18n="voice.faq6_q">C'est compatible avec mon CRM ?</span><span class="faq-icon"></span></button><div class="faq-answer"><p data-i18n="voice.faq6_a">Oui. On a des intégrations pour les CRM populaires (Jobber, Mindbody, Cliniko, etc.). Pour les systèmes sur mesure, notre équipe crée le pont via API.</p></div></div>
+        <div class="faq-item"><button class="faq-question"><span data-i18n="voice.faq7_q">Comment sont gérées les données ?</span><span class="faq-icon"></span></button><div class="faq-answer"><p data-i18n="voice.faq7_a">Les appels sont traités et stockés sur des serveurs canadiens. Les transcriptions sont chiffrées. Conforme à la Loi 25 sur la protection des renseignements personnels.</p></div></div>
+        <div class="faq-item"><button class="faq-question"><span data-i18n="voice.faq8_q">Y a-t-il des frais cachés ?</span><span class="faq-icon"></span></button><div class="faq-answer"><p data-i18n="voice.faq8_a">Non. Abonnement mensuel transparent qui inclut l'utilisation, la maintenance, les mises à jour et le support. Les frais d'appels téléphoniques (selon votre opérateur) sont les seuls coûts externes.</p></div></div>
       </div>
     </div>
   </section>
@@ -578,10 +315,13 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
     <div class="container">
       <div class="prod-hero-grid">
         <div>
-          <p class="mono" style="margin-bottom: 1.5rem;">Produit 02</p>
-          <h1>GEO : Generative Engine Optimization</h1>
-          <p>Le SEO traditionnel est mort. Nous optimisons votre entreprise pour devenir une source citée par les moteurs d'IA comme ChatGPT, Perplexity et Google AI Overviews.</p>
-          <a href="#" data-page="contact" class="btn btn-primary">Audit GEO gratuit</a>
+          <p class="mono" style="margin-bottom: 1.5rem;" data-i18n="geo.tag">GEO — Generative Engine Optimization</p>
+          <h1 data-i18n="geo.title">Soyez la réponse,<br>pas un lien bleu.</h1>
+          <p data-i18n="geo.desc">Les gens ne cherchent plus sur Google comme avant. Ils posent des questions à ChatGPT, Perplexity et Google AI. Si votre entreprise n'est pas dans leurs réponses, elle est invisible.</p>
+          <a href="#" data-page="contact" class="btn btn-primary" data-i18n="geo.cta">Audit GEO gratuit</a>
+        </div>
+        <div>
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=450&fit=crop" alt="Analytics GEO" class="prod-hero-img" loading="lazy">
         </div>
       </div>
     </div>
@@ -592,25 +332,48 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
       <div class="details-grid">
         <div>
           <div class="detail-block">
-            <h3>L'évolution du référencement</h3>
-            <p>Les utilisateurs ne cliquent plus sur des liens bleus. Ils posent des questions directes à des assistants IA. Si votre entreprise n'est pas dans la base de connaissances de ces moteurs génératifs, vous êtes invisibles pour une majorité de vos clients potentiels. Le trafic organique classique chute, le trafic "Zero-Click" explose.</p>
+            <h3 data-i18n="geo.evolution_title">Le référencement a changé</h3>
+            <p data-i18n="geo.evolution_desc">Les utilisateurs ne cliquent plus sur des liens. Ils posent une question et lisent la réponse générée par l'IA. Si votre entreprise n'est pas dans la base de connaissances de ces moteurs, vous êtes invisible pour une part croissante de vos clients potentiels.</p>
           </div>
           <div class="detail-block">
-            <h3>Notre méthodologie GEO</h3>
-            <p>Nous structurons vos données, optimisons votre sémantique et créons le réseau de signaux nécessaires pour que les algorithmes génératifs vous considèrent comme une autorité indiscutable dans votre domaine et votre région.</p>
+            <h3 data-i18n="geo.method_title">Notre méthode</h3>
+            <p data-i18n="geo.method_desc">On structure vos données, on optimise votre contenu pour le format « réponses génératives », et on bâtit le réseau de signaux de confiance nécessaire pour que les algorithmes d'IA vous considèrent comme une source fiable dans votre domaine et votre région.</p>
           </div>
         </div>
         <div>
-          <h3 style="margin-bottom: 1.5rem; font-size: 1.4rem;">Le processus GEO</h3>
+          <h3 style="margin-bottom: 1.5rem; font-size: 1.4rem;" data-i18n="geo.process_title">Le processus GEO</h3>
           <ul class="feature-list">
-            <li><span class="check">+</span> <div><strong>Audit de visibilité IA</strong>Où en êtes-vous sur ChatGPT et Perplexity aujourd'hui ?</div></li>
-            <li><span class="check">+</span> <div><strong>Structuration des données</strong>Schéma markup et balisage sémantique avancé.</div></li>
-            <li><span class="check">+</span> <div><strong>Réseau de citations</strong>Obtention de mentions sur des sources de haute confiance pour les LLMs.</div></li>
-            <li><span class="check">+</span> <div><strong>Optimisation sémantique</strong>Réécriture du contenu orientée "réponses génératives".</div></li>
-            <li><span class="check">+</span> <div><strong>Suivi mensuel</strong>Mesure exacte de vos apparitions dans les réponses IA.</div></li>
-            <li><span class="check">+</span> <div><strong>Google Business Pro</strong>Optimisation pour les recherches locales "Zero-Click".</div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="geo.f1_t">Audit de visibilité IA</strong><span data-i18n="geo.f1_d">On mesure votre présence actuelle sur ChatGPT, Perplexity et Google AI.</span></div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="geo.f2_t">Structuration sémantique</strong><span data-i18n="geo.f2_d">Balisage Schema.org avancé et architecture de contenu optimisée.</span></div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="geo.f3_t">Réseau de citations</strong><span data-i18n="geo.f3_d">Mentions sur des sources de haute confiance pour les modèles de langage.</span></div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="geo.f4_t">Réécriture orientée IA</strong><span data-i18n="geo.f4_d">Contenu structuré pour être « digestible » par les algorithmes génératifs.</span></div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="geo.f5_t">Suivi mensuel</strong><span data-i18n="geo.f5_d">Rapport de vos apparitions dans les réponses IA, mois après mois.</span></div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="geo.f6_t">Google Business optimisé</strong><span data-i18n="geo.f6_d">Optimisation pour les recherches locales « Zero-Click ».</span></div></li>
           </ul>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GEO Audit Tool -->
+  <section class="audit-section">
+    <div class="container">
+      <div class="audit-box">
+        <p class="mono" style="margin-bottom: 1rem; color: var(--accent-dark-bg);" data-i18n="geo.audit_tag">Outil gratuit</p>
+        <h2 style="color: #fff; margin-bottom: 1rem;" data-i18n="geo.audit_title">Audit GEO automatique</h2>
+        <p style="color: rgba(255,255,255,0.6);" data-i18n="geo.audit_desc">Entrez l'adresse de votre site web. Notre IA analysera votre présence et vous donnera un diagnostic détaillé avec des recommandations concrètes.</p>
+        <div class="audit-input-row">
+          <input type="url" class="audit-input" id="auditUrl" placeholder="https://www.votresite.com" />
+          <button class="btn btn-primary" id="auditBtn" data-i18n="geo.audit_btn">Lancer l'audit</button>
+        </div>
+        <p class="audit-disclaimer" data-i18n="geo.audit_disclaimer">⚠️ Cet audit est généré automatiquement par intelligence artificielle. Il fournit une évaluation préliminaire basée sur les données publiques de votre site web et ne constitue pas un diagnostic professionnel complet. Pour une analyse approfondie et un plan d'action personnalisé, contactez notre équipe.</p>
+
+        <div class="audit-loading" id="auditLoading">
+          <div class="audit-spinner"></div>
+          <p style="color: rgba(255,255,255,0.6);" data-i18n="geo.audit_loading">Analyse en cours — cela peut prendre 30 à 60 secondes...</p>
+        </div>
+
+        <div class="audit-results" id="auditResults"></div>
       </div>
     </div>
   </section>
@@ -618,19 +381,15 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   <!-- FAQ GEO -->
   <section class="faq-section">
     <div class="container">
-      <p class="mono" style="margin-bottom: 1rem;">Questions fréquentes</p>
-      <h2>FAQ : GEO (Moteurs IA)</h2>
+      <p class="mono" style="margin-bottom: 1rem;" data-i18n="geo.faq_tag">Questions fréquentes</p>
+      <h2 data-i18n="geo.faq_title">FAQ — GEO (Moteurs IA)</h2>
       <div class="faq-list" style="margin-top: 3rem;">
-        <div class="faq-item"><button class="faq-question">Quelle est la différence entre le SEO et le GEO ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Le SEO (Search Engine Optimization) optimise votre site pour apparaître dans les résultats de recherche traditionnels (les liens bleus). Le GEO (Generative Engine Optimization) optimise votre contenu pour qu'il soit lu, compris et cité comme source par les modèles d'IA comme ChatGPT, Perplexity ou Google AI Overviews.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Est-ce que le GEO remplace mon agence SEO ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Pas nécessairement. Le GEO complète le SEO traditionnel. Cependant, comme le trafic "Zero-Click" (les réponses directes de l'IA) prend de plus en plus de place, le GEO devient indispensable pour capter cette nouvelle partie du marché. Nous pouvons travailler en synergie avec votre agence SEO actuelle.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Comment ChatGPT choisit-il les entreprises qu'il cite ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Les LLMs s'appuient sur la pertinence, la autorité de domaine, la structuration des données (Schema.org), et les mentions sur des sites de confiance (presse, annuaires majeurs, forums). Notre travail consiste à aligner votre présence web avec ces critères algorithmiques.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Combien de temps faut-il pour voir des résultats ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Contrairement au SEO qui peut prendre 6 à 12 mois, les premiers résultats en GEO apparaissent souvent entre 4 et 8 semaines. Les moteurs IA mettent à jour leur base de connaissances plus régulièrement que les index de recherche classiques.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Pouvez-vous garantir que mon entreprise sera citée par ChatGPT ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Aucun consultant sérieux peut garantir une citation à 100%, car les algorithmes des LLMs sont propriétaires et changent régulièrement. Cependant, nous pouvons garantir une amélioration drastique de votre "signal de confiance" et de votre indexabilité, ce qui se traduit par des citations mesurables dans la grande majorité des cas.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Faut-il avoir un site web pour faire du GEO ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Oui, un site web structuré est la base. Si vous n'en avez pas, nous pouvons le créer. Si vous en avez un, nous allons le retravailler en profondeur (architecture, balises, contenus) pour qu'il devienne une "proie facile" pour les crawlers d'IA.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Est-ce que ça fonctionne pour une entreprise locale uniquement ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Le GEO est particulièrement puissant pour le local (ex: "Meilleur avocat immobilier à Montréal"), mais il fonctionne aussi pour des expertises niches. Si vous répondez à une question spécifique que les utilisateurs posent aux IA, vous serez cité.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Comment mesurez-vous les résultats ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Nous utilisons des outils d'analyse sémantique qui interrogent les différents modèles d'IA (OpenAI, Anthropic, Google) avec des requêtes ciblées liées à votre secteur. Nous produisons un rapport mensuel indiquant votre taux de citation, votre positionnement par rapport aux concurrents, et l'évolution de votre autorité.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Qu'est-ce que Google AI Overviews (SGE) ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>C'est la nouvelle interface de Google qui génère une réponse rédigée par IA en haut des résultats de recherche, avant même les premiers liens. Être cité dans ce "résumé" est devenu le Saint-Graal du référencement moderne, et c'est le cœur de notre service GEO.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Quel est l'investissement requis pour le GEO ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>L'investissement dépend de votre point de départ (audit initial) et de la compétitivité de votre secteur. Nous proposons des forfaits d'optimisation initiale, suivis d'un abonnement mensuel de maintenance et de suivi de positions pour vous assurer de rester cité.</p></div></div>
+        <div class="faq-item"><button class="faq-question"><span data-i18n="geo.faq1_q">Quelle est la différence entre SEO et GEO ?</span><span class="faq-icon"></span></button><div class="faq-answer"><p data-i18n="geo.faq1_a">Le SEO optimise votre site pour les résultats classiques (les liens bleus). Le GEO optimise votre contenu pour qu'il soit lu, compris et cité par les modèles d'IA comme ChatGPT, Perplexity ou Google AI Overviews. Le GEO ne remplace pas le SEO — il le complète.</p></div></div>
+        <div class="faq-item"><button class="faq-question"><span data-i18n="geo.faq2_q">Combien de temps pour voir des résultats ?</span><span class="faq-icon"></span></button><div class="faq-answer"><p data-i18n="geo.faq2_a">Les premiers résultats en GEO apparaissent souvent entre 4 et 8 semaines, plus rapidement que le SEO traditionnel (6 à 12 mois). Les moteurs IA mettent à jour leur base de connaissances régulièrement.</p></div></div>
+        <div class="faq-item"><button class="faq-question"><span data-i18n="geo.faq3_q">Pouvez-vous garantir une citation par ChatGPT ?</span><span class="faq-icon"></span></button><div class="faq-answer"><p data-i18n="geo.faq3_a">Aucun consultant sérieux ne garantit une citation à 100 %. Les algorithmes sont propriétaires et changent régulièrement. On garantit une amélioration mesurable de votre « signal de confiance » — ce qui se traduit par des citations dans la grande majorité des cas.</p></div></div>
+        <div class="faq-item"><button class="faq-question"><span data-i18n="geo.faq4_q">Faut-il un site web ?</span><span class="faq-icon"></span></button><div class="faq-answer"><p data-i18n="geo.faq4_a">Oui, un site structuré est la base. Si vous n'en avez pas, on peut le créer. Si vous en avez un, on le retravaille en profondeur pour que les crawlers d'IA le comprennent facilement.</p></div></div>
+        <div class="faq-item"><button class="faq-question"><span data-i18n="geo.faq5_q">Ça marche pour les entreprises locales ?</span><span class="faq-icon"></span></button><div class="faq-answer"><p data-i18n="geo.faq5_a">C'est même là que le GEO est le plus puissant. « Meilleur avocat immobilier à Montréal » — si votre cabinet est bien positionné, c'est votre nom que l'IA va citer.</p></div></div>
+        <div class="faq-item"><button class="faq-question"><span data-i18n="geo.faq6_q">Comment mesurez-vous les résultats ?</span><span class="faq-icon"></span></button><div class="faq-answer"><p data-i18n="geo.faq6_a">On interroge les différents modèles d'IA avec des requêtes ciblées liées à votre secteur. Rapport mensuel avec votre taux de citation, votre positionnement par rapport aux concurrents, et l'évolution de votre autorité.</p></div></div>
       </div>
     </div>
   </section>
@@ -644,10 +403,13 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
     <div class="container">
       <div class="prod-hero-grid">
         <div>
-          <p class="mono" style="margin-bottom: 1.5rem;">Produit 03</p>
-          <h1>LLM Interne Sécurisé</h1>
-          <p>L'intelligence de ChatGPT, mais hébergée chez vous. Vos données sensibles, juridiques ou médicales ne quittent jamais votre infrastructure.</p>
-          <a href="#" data-page="contact" class="btn btn-primary">Évaluer la compatibilité</a>
+          <p class="mono" style="margin-bottom: 1.5rem;" data-i18n="llm.tag">LLM Interne Sécurisé</p>
+          <h1 data-i18n="llm.title">ChatGPT, mais<br>chez vous.</h1>
+          <p data-i18n="llm.desc">Vos données sensibles — juridiques, médicales, financières — ne quittent jamais votre infrastructure. Vos employés ont la puissance de l'IA sans les risques de confidentialité.</p>
+          <a href="#" data-page="contact" class="btn btn-primary" data-i18n="llm.cta">Évaluer la compatibilité</a>
+        </div>
+        <div>
+          <img src="https://images.unsplash.com/photo-1563986768609-322da13575f2?w=600&h=450&fit=crop" alt="Serveurs sécurisés" class="prod-hero-img" loading="lazy">
         </div>
       </div>
     </div>
@@ -658,45 +420,39 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
       <div class="details-grid">
         <div>
           <div class="detail-block">
-            <h3>Le défi de la confidentialité</h3>
-            <p>Les cabinets d'avocats, les cliniques et les firmes de comptabilité ne peuvent pas envoyer des informations confidentielles à des services tiers. Les risques juridiques et de conformité avec la Loi 25 au Québec sont trop élevés. L'IA devient un risque au lieu d'un atout.</p>
+            <h3 data-i18n="llm.problem_title">Le problème de confidentialité</h3>
+            <p data-i18n="llm.problem_desc">Les cabinets d'avocats, les cliniques et les firmes de comptabilité ne peuvent pas envoyer des documents confidentiels à ChatGPT. Les données transitent par des serveurs américains, les risques de conformité avec la Loi 25 sont trop élevés. L'IA devient un risque au lieu d'un avantage.</p>
           </div>
           <div class="detail-block">
-            <h3>L'infrastructure Marquis AI</h3>
-            <p>Nous déployons un modèle de langage open-source performant, connecté à votre réseau local ou cloud privé. Vos employés peuvent interroger vos documents, rédiger ou résumer des dossiers, avec une sécurité absolue et une interface aussi simple que ChatGPT.</p>
+            <h3 data-i18n="llm.solution_title">Ce qu'on installe</h3>
+            <p data-i18n="llm.solution_desc">Un modèle de langage open-source performant, connecté à votre réseau local ou cloud privé. Vos employés interrogent vos documents, rédigent ou résument des dossiers — avec une interface aussi simple que ChatGPT et une sécurité absolue.</p>
           </div>
         </div>
         <div>
-          <h3 style="margin-bottom: 1.5rem; font-size: 1.4rem;">Avantages techniques</h3>
+          <h3 style="margin-bottom: 1.5rem; font-size: 1.4rem;" data-i18n="llm.features_title">Avantages techniques</h3>
           <ul class="feature-list">
-            <li><span class="check">+</span> <div><strong>Hébergement privé</strong>Sur vos serveurs physiques ou un cloud privé contrôlé.</div></li>
-            <li><span class="check">+</span> <div><strong>Zéro fuite de données</strong>Aucune information ne transite par un réseau public.</div></li>
-            <li><span class="check">+</span> <div><strong>RAG intégré (Génération Augmentée)</strong>Interrogez vos PDF, Word et bases de données internes.</div></li>
-            <li><span class="check">+</span> <div><strong>Conforme Loi 25</strong>Répond aux exigences strictes de protection des données.</div></li>
-            <li><span class="check">+</span> <div><strong>Interface intuitive</strong>Aussi facile à utiliser que les outils grand public.</div></li>
-            <li><span class="check">+</span> <div><strong>Personnalisation sectorielle</strong>Adapté au vocabulaire juridique, médical ou financier.</div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="llm.f1_t">Hébergement privé</strong><span data-i18n="llm.f1_d">Sur vos serveurs physiques ou un cloud privé que vous contrôlez.</span></div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="llm.f2_t">Zéro fuite de données</strong><span data-i18n="llm.f2_d">Aucune information ne transite par un réseau public.</span></div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="llm.f3_t">RAG intégré</strong><span data-i18n="llm.f3_d">L'IA interroge vos PDF, Word et bases de données internes pour trouver ses réponses.</span></div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="llm.f4_t">Conforme Loi 25</strong><span data-i18n="llm.f4_d">Documentation d'audit incluse. Données localisées au Canada.</span></div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="llm.f5_t">Interface intuitive</strong><span data-i18n="llm.f5_d">Si vos employés savent utiliser ChatGPT, ils sauront utiliser celui-ci.</span></div></li>
+            <li><span class="check">✓</span> <div><strong data-i18n="llm.f6_t">Vocabulaire adapté</strong><span data-i18n="llm.f6_d">Le modèle apprend le jargon juridique, médical ou financier de votre domaine.</span></div></li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FAQ LLM -->
   <section class="faq-section">
     <div class="container">
-      <p class="mono" style="margin-bottom: 1rem;">Questions fréquentes</p>
-      <h2>FAQ : LLM Interne</h2>
+      <p class="mono" style="margin-bottom: 1rem;" data-i18n="llm.faq_tag">Questions fréquentes</p>
+      <h2 data-i18n="llm.faq_title">FAQ — LLM Interne</h2>
       <div class="faq-list" style="margin-top: 3rem;">
-        <div class="faq-item"><button class="faq-question">Pourquoi ne pas simplement utiliser ChatGPT Enterprise ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>ChatGPT Enterprise garantit qu'OpenAI n'entraîne pas de modèles sur vos données, mais vos données transitent tout de même par leurs serveurs américains. Pour des cabinets juridiques ou des cliniques soumises à la Loi 25 (et aux lois fédérales sur la santé), ce niveau de risque est souvent jugé inacceptable. Notre solution garde les données physiquement chez vous.</p></div></div>
-        <div class="faq-item"><button class="faq-question">L'IA interne est-elle aussi intelligente que ChatGPT ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Les modèles open-source modernes (comme Llama 3 ou Mistral) ont des performances qui se rapprochent énormément de GPT-4, surtout pour des tâches spécialisées. De plus, comme nous le connectons directement à VOS documents (RAG), il vous répondra souvent avec plus de précision et de pertinence sur vos propres dossiers qu'un modèle généraliste.</p></div></div>
-        <div class="faq-item"><button class="faq-question">De quel matériel (hardware) avons-nous besoin ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Cela dépend du volume d'utilisation. Pour une petite équipe, un serveur local robuste (coût d'environ 3000$-5000$) suffit. Pour des centaines d'utilisateurs, une infrastructure cloud privé (ex: AWS VPC, Azure Private) est préférable. Nous faisons l'audit matériel gratuit lors de la première rencontre.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Comment l'IA accède-t-elle à nos documents internes ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Nous utilisons une technique appelée RAG (Retrieval-Augmented Generation). Vos documents (PDF, Word, Excel, bases de données) sont indexés de manière sécurisée sur votre serveur. Quand un employé pose une question, l'IA cherche la réponse dans ces documents et la formule, sans jamais envoyer le document lui-même à l'extérieur.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Est-ce difficile à utiliser pour mes employés ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Absolument pas. Nous fournissons une interface web identique à celle de ChatGPT. Si vos employés savent utiliser ChatGPT sur leur téléphone, ils sauront utiliser votre LLM interne. La courbe d'apprentissage est quasi nulle.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Qui a accès au système ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Vous contrôlez l'accès totalement. Nous intégrons le système à votre annuaire d'entreprise (Active Directory, Microsoft Entra ID, etc.). Vous décidez qui peut l'utiliser, qui peut voir quels documents, et nous mettons en place des logs d'accès inviolables.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Combien de temps prend le déploiement ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>En moyenne 2 à 4 semaines. Cela inclut l'installation des serveurs, la configuration du modèle, l'indexation de votre base de documents initiale, les tests de sécurité et la formation de votre équipe. Nous assurons ensuite le support continu.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Peut-on l'utiliser pour rédiger des documents officiels ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Oui. Vous pouvez créer des "prompts" (commandes) pré-configurés pour standardiser la rédaction de contrats, de lettres de suivi, de résumés de dossiers ou de notes cliniques. L'IA s'assurera de respecter le ton et le format exigés par votre entreprise.</p></div></div>
-        <div class="faq-item"><button class="faq-question">Est-ce que le système peut être mis à jour avec de nouvelles informations ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Oui, en temps réel. Si vous ajoutez un nouveau PDF dans le dossier surveillé, il est indexé automatiquement en quelques secondes et devient une source de connaissance pour l'IA sans aucune intervention technique de votre part.</p></div></div>
-        <div class="faq-item"><button class="faq-question">La Loi 25 est-elle vraiment respectée avec cette solution ?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Oui, c'en est l'objectif premier. Puisque les données ne sortent pas de votre infrastructure physique ou cloud privé localisé au Canada, vous respectez les principes de minimisation des données et de localisation exigés par la Loi 25. Nous fournissons d'ailleurs une documentation technique prête pour un audit de conformité.</p></div></div>
+        <div class="faq-item"><button class="faq-question"><span data-i18n="llm.faq1_q">Pourquoi pas ChatGPT Enterprise ?</span><span class="faq-icon"></span></button><div class="faq-answer"><p data-i18n="llm.faq1_a">ChatGPT Enterprise garantit que vos données ne servent pas à l'entraînement, mais elles transitent quand même par des serveurs américains. Pour des cabinets juridiques ou des cliniques soumises à la Loi 25, ce niveau de risque est souvent jugé inacceptable. Notre solution garde les données physiquement chez vous.</p></div></div>
+        <div class="faq-item"><button class="faq-question"><span data-i18n="llm.faq2_q">C'est aussi intelligent que ChatGPT ?</span><span class="faq-icon"></span></button><div class="faq-answer"><p data-i18n="llm.faq2_a">Les modèles open-source modernes ont des performances très proches de GPT-4, surtout pour des tâches spécialisées. En plus, comme le système est connecté à VOS documents (RAG), il répond souvent avec plus de précision qu'un modèle généraliste sur vos propres dossiers.</p></div></div>
+        <div class="faq-item"><button class="faq-question"><span data-i18n="llm.faq3_q">De quel matériel a-t-on besoin ?</span><span class="faq-icon"></span></button><div class="faq-answer"><p data-i18n="llm.faq3_a">Pour une petite équipe, un serveur local (environ 3 000 $ à 5 000 $) suffit. Pour des centaines d'utilisateurs, un cloud privé (AWS VPC, Azure Private) est préférable. On fait l'audit matériel gratuit lors de la première rencontre.</p></div></div>
+        <div class="faq-item"><button class="faq-question"><span data-i18n="llm.faq4_q">Combien de temps pour le déploiement ?</span><span class="faq-icon"></span></button><div class="faq-answer"><p data-i18n="llm.faq4_a">En moyenne 2 à 4 semaines. Installation, configuration du modèle, indexation de vos documents, tests de sécurité et formation de votre équipe. Support continu inclus ensuite.</p></div></div>
+        <div class="faq-item"><button class="faq-question"><span data-i18n="llm.faq5_q">Les nouveaux documents sont indexés automatiquement ?</span><span class="faq-icon"></span></button><div class="faq-answer"><p data-i18n="llm.faq5_a">Oui. Si vous ajoutez un PDF dans le dossier surveillé, il est indexé en quelques secondes et devient une source de connaissance pour l'IA. Aucune intervention technique requise.</p></div></div>
       </div>
     </div>
   </section>
@@ -708,59 +464,68 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 <div id="page-contact" class="page">
   <section class="contact-section">
     <div class="container">
-      <p class="mono" style="margin-bottom: 1rem;">Contact</p>
-      <h2>Parlons de votre entreprise.</h2>
-      <p style="max-width: 600px; margin-bottom: 4rem; font-size: 1.1rem;">Une heure de conversation suffit généralement pour identifier ce que nous pouvons automatiser, optimiser ou sécuriser. La démo est gratuite, le diagnostic est honnête.</p>
+      <p class="mono" style="margin-bottom: 1rem;" data-i18n="contact.tag">Contact</p>
+      <h2 data-i18n="contact.title">Une heure suffit pour voir clair.</h2>
+      <p style="max-width: 600px; margin-bottom: 4rem; font-size: 1.1rem;" data-i18n="contact.desc">On s'assoit avec vous, on identifie ce qu'on peut automatiser, et on vous dit honnêtement si ça vaut le coup. La consultation est gratuite.</p>
 
       <div class="contact-grid">
         <div class="contact-info">
           <div class="contact-info-item">
-            <label>Téléphone</label>
+            <label data-i18n="contact.phone_label">Téléphone</label>
             <p>514 883-3756</p>
           </div>
           <div class="contact-info-item">
-            <label>Courriel</label>
-            <p>marquisai@gmail.com</p>
+            <label data-i18n="contact.email_label">Courriel</label>
+            <p>info@marquisai.ca</p>
+          </div>
+          <div class="contact-info-item">
+            <label data-i18n="contact.location_label">Bureau</label>
+            <p data-i18n="contact.location_value">Montréal, QC</p>
           </div>
         </div>
 
         <div class="form-card">
-          <form id="contactForm">
+          <form id="contactForm" novalidate>
             <div class="form-row">
-              <div class="form-group">
-                <label>Nom complet</label>
+              <div class="form-group" data-field="nom">
+                <label data-i18n="contact.form_name">Nom complet</label>
                 <input type="text" name="nom" class="form-control" required>
+                <div class="field-error" data-i18n="contact.err_name">Veuillez entrer votre nom.</div>
               </div>
-              <div class="form-group">
-                <label>Entreprise</label>
+              <div class="form-group" data-field="entreprise">
+                <label data-i18n="contact.form_company">Entreprise</label>
                 <input type="text" name="entreprise" class="form-control" required>
+                <div class="field-error" data-i18n="contact.err_company">Veuillez entrer le nom de votre entreprise.</div>
               </div>
             </div>
             <div class="form-row">
-              <div class="form-group">
-                <label>Courriel</label>
+              <div class="form-group" data-field="courriel">
+                <label data-i18n="contact.form_email">Courriel</label>
                 <input type="email" name="courriel" class="form-control" required>
+                <div class="field-error" data-i18n="contact.err_email">Veuillez entrer une adresse courriel valide.</div>
               </div>
-              <div class="form-group">
-                <label>Téléphone</label>
-                <input type="tel" name="telephone" class="form-control">
+              <div class="form-group" data-field="telephone">
+                <label data-i18n="contact.form_phone">Téléphone</label>
+                <input type="tel" name="telephone" class="form-control" placeholder="514 000-0000">
+                <div class="field-error" data-i18n="contact.err_phone">Veuillez entrer un numéro valide.</div>
               </div>
             </div>
-            <div class="form-group full">
-              <label>Service intéressé</label>
+            <div class="form-group full" data-field="service">
+              <label data-i18n="contact.form_service">Service souhaité</label>
               <select name="service" class="form-control" required>
-                <option value="">— Sélectionner —</option>
-                <option value="voice">Agent Vocal IA</option>
-                <option value="geo">GEO (Moteurs IA)</option>
-                <option value="llm">LLM Interne</option>
-                <option value="autre">Autre / Plusieurs services</option>
+                <option value="" data-i18n="contact.form_select">— Sélectionner —</option>
+                <option value="voice" data-i18n="contact.form_opt_voice">Agent Vocal IA</option>
+                <option value="geo" data-i18n="contact.form_opt_geo">GEO (Moteurs IA)</option>
+                <option value="llm" data-i18n="contact.form_opt_llm">LLM Interne</option>
+                <option value="autre" data-i18n="contact.form_opt_other">Autre / Plusieurs services</option>
               </select>
+              <div class="field-error" data-i18n="contact.err_service">Veuillez sélectionner un service.</div>
             </div>
-            <div class="form-group full">
-              <label>Message</label>
-              <textarea name="message" class="form-control" placeholder="Décrivez brièvement votre défi principal..."></textarea>
+            <div class="form-group full" data-field="message">
+              <label data-i18n="contact.form_message">Message</label>
+              <textarea name="message" class="form-control" data-placeholder-i18n="contact.form_msg_placeholder" placeholder="Décrivez brièvement votre défi principal..."></textarea>
             </div>
-            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;" id="submitBtn">Envoyer la demande</button>
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;" id="submitBtn" data-i18n="contact.form_submit">Envoyer la demande</button>
           </form>
         </div>
       </div>
@@ -768,221 +533,190 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
   </section>
 </div>
 
-<!-- Footer (Global) -->
+<!-- ========================================== -->
+<!-- PAGE: CONFIDENTIALITÉ -->
+<!-- ========================================== -->
+<div id="page-privacy" class="page">
+  <section class="prod-hero no-fade" style="padding-bottom: 2rem;">
+    <div class="container">
+      <p class="mono" style="margin-bottom: 1.5rem;" data-i18n="privacy.tag">Juridique</p>
+      <h1 data-i18n="privacy.title">Politique de confidentialité</h1>
+      <p style="color: rgba(255,255,255,0.5);" data-i18n="privacy.updated">Dernière mise à jour : 30 juin 2026</p>
+    </div>
+  </section>
+  <section class="prod-content">
+    <div class="container legal-content" id="privacyContent">
+      <p><strong>Marquis AI</strong> (ci-après « nous », « notre » ou « la Société »), une division de Marquis Logiciels Inc. (9559-9270 Québec inc.), s'engage à protéger la vie privée de ses utilisateurs, clients et visiteurs du site web (ci-après « vous »). La présente politique de confidentialité décrit les renseignements personnels que nous recueillons, la manière dont nous les utilisons, les partageons et les protégeons, conformément à la <em>Loi sur la protection des renseignements personnels dans le secteur privé</em> du Québec (ci-après « Loi 25 »), à la <em>Loi sur la protection des renseignements personnels et les documents électroniques</em> (LPRPDE) du Canada, et aux autres lois applicables.</p>
+
+      <h3>1. Renseignements recueillis</h3>
+      <p>Nous pouvons recueillir les catégories suivantes de renseignements personnels :</p>
+      <ul>
+        <li><strong>Coordonnées :</strong> nom, adresse courriel, numéro de téléphone, nom de l'entreprise, adresse postale.</li>
+        <li><strong>Données d'utilisation :</strong> adresse IP, type de navigateur, pages consultées, date et heure des visites, durée de session.</li>
+        <li><strong>Données de communication :</strong> contenu des messages envoyés via notre formulaire de contact ou par courriel.</li>
+        <li><strong>Données contractuelles :</strong> informations nécessaires à la prestation de nos services (documents fournis par le client, données de configuration).</li>
+      </ul>
+
+      <h3>2. Finalités du traitement</h3>
+      <p>Nous utilisons vos renseignements personnels aux fins suivantes :</p>
+      <ul>
+        <li>Répondre à vos demandes d'information et communiquer avec vous.</li>
+        <li>Fournir, maintenir et améliorer nos services (agent vocal, GEO, LLM interne).</li>
+        <li>Envoyer des communications relatives à nos services (mises à jour, rappels, factures).</li>
+        <li>Se conformer à nos obligations légales et réglementaires.</li>
+        <li>Protéger nos droits, notre propriété et la sécurité de nos systèmes.</li>
+      </ul>
+
+      <h3>3. Base légale du traitement</h3>
+      <p>Le traitement de vos renseignements personnels repose sur votre consentement exprès (obtenu au moment de la collecte), l'exécution d'un contrat auquel vous êtes partie, ou le respect d'une obligation légale à laquelle nous sommes assujettis.</p>
+
+      <h3>4. Partage et divulgation</h3>
+      <p>Nous ne vendons ni ne louons vos renseignements personnels. Nous pouvons les partager avec :</p>
+      <ul>
+        <li><strong>Fournisseurs de services :</strong> hébergeurs, processeurs de paiement, services d'envoi de courriels, uniquement dans la mesure nécessaire à la prestation de nos services. Ces fournisseurs sont contractuellement tenus de protéger vos renseignements.</li>
+        <li><strong>Autorités compétentes :</strong> lorsqu'exigé par la loi, une ordonnance judiciaire ou une procédure juridique.</li>
+      </ul>
+
+      <h3>5. Hébergement et transfert de données</h3>
+      <p>Vos renseignements personnels sont hébergés sur des serveurs situés au Canada. Nous ne transférons pas de renseignements personnels à l'extérieur du Canada sans votre consentement explicite et sans nous assurer que le pays de destination offre un niveau de protection adéquat au sens de la Loi 25.</p>
+
+      <h3>6. Conservation des données</h3>
+      <p>Nous conservons vos renseignements personnels aussi longtemps que nécessaire pour remplir les finalités pour lesquelles ils ont été recueillis, ou pour nous conformer à nos obligations légales, comptables ou de déclaration. Les données de prospection non converties sont supprimées après 24 mois d'inactivité.</p>
+
+      <h3>7. Vos droits</h3>
+      <p>Conformément à la Loi 25, vous disposez des droits suivants :</p>
+      <ul>
+        <li><strong>Droit d'accès :</strong> obtenir une copie de vos renseignements personnels que nous détenons.</li>
+        <li><strong>Droit de rectification :</strong> faire corriger des renseignements inexacts ou incomplets.</li>
+        <li><strong>Droit de retrait du consentement :</strong> retirer votre consentement au traitement à tout moment.</li>
+        <li><strong>Droit à la suppression :</strong> demander la suppression de vos renseignements lorsqu'ils ne sont plus nécessaires.</li>
+        <li><strong>Droit à la portabilité :</strong> recevoir vos renseignements dans un format technologique structuré et couramment utilisé.</li>
+      </ul>
+      <p>Pour exercer vos droits, contactez notre responsable de la protection des renseignements personnels à l'adresse : <strong>info@marquisai.ca</strong>. Nous répondrons dans un délai de 30 jours.</p>
+
+      <h3>8. Sécurité</h3>
+      <p>Nous mettons en œuvre des mesures techniques et organisationnelles appropriées pour protéger vos renseignements personnels contre l'accès non autorisé, la divulgation, la modification ou la destruction, incluant le chiffrement des données en transit (TLS) et au repos (AES-256), des contrôles d'accès stricts et des audits de sécurité périodiques.</p>
+
+      <h3>9. Témoins (cookies)</h3>
+      <p>Notre site web peut utiliser des témoins de navigation pour améliorer votre expérience, analyser le trafic et mesurer l'efficacité de notre contenu. Vous pouvez configurer votre navigateur pour refuser les témoins ou être averti lorsqu'un témoin est envoyé.</p>
+
+      <h3>10. Modifications</h3>
+      <p>Nous nous réservons le droit de modifier la présente politique à tout moment. Toute modification importante sera communiquée par courriel ou par un avis visible sur notre site web. La date de la dernière mise à jour est indiquée en haut du document.</p>
+
+      <h3>11. Contact</h3>
+      <p>Pour toute question relative à la présente politique ou à la protection de vos renseignements personnels :</p>
+      <p><strong>Marquis AI — Marquis Logiciels Inc.</strong><br>Montréal, QC, Canada<br>Courriel : info@marquisai.ca<br>Téléphone : 514 883-3756</p>
+    </div>
+  </section>
+</div>
+
+<!-- ========================================== -->
+<!-- PAGE: CONDITIONS -->
+<!-- ========================================== -->
+<div id="page-terms" class="page">
+  <section class="prod-hero no-fade" style="padding-bottom: 2rem;">
+    <div class="container">
+      <p class="mono" style="margin-bottom: 1.5rem;" data-i18n="terms.tag">Juridique</p>
+      <h1 data-i18n="terms.title">Conditions d'utilisation</h1>
+      <p style="color: rgba(255,255,255,0.5);" data-i18n="terms.updated">Dernière mise à jour : 30 juin 2026</p>
+    </div>
+  </section>
+  <section class="prod-content">
+    <div class="container legal-content" id="termsContent">
+      <p>Les présentes conditions d'utilisation (ci-après « Conditions ») régissent l'utilisation du site web, des services et des produits offerts par <strong>Marquis AI</strong>, une division de Marquis Logiciels Inc. (9559-9270 Québec inc.) (ci-après « la Société », « nous »). En accédant à notre site web ou en utilisant nos services, vous acceptez d'être lié par les présentes Conditions.</p>
+
+      <h3>1. Définitions</h3>
+      <ul>
+        <li><strong>« Services » :</strong> l'ensemble des produits et prestations offerts par Marquis AI, incluant l'agent vocal IA, le service de GEO (Generative Engine Optimization) et le LLM interne sécurisé.</li>
+        <li><strong>« Client » :</strong> toute personne physique ou morale qui contracte avec la Société pour l'utilisation des Services.</li>
+        <li><strong>« Utilisateur » :</strong> toute personne qui accède au site web de la Société.</li>
+      </ul>
+
+      <h3>2. Acceptation des conditions</h3>
+      <p>L'utilisation de notre site web et de nos Services implique votre acceptation pleine et entière des présentes Conditions. Si vous n'acceptez pas l'ensemble des Conditions, vous devez cesser immédiatement d'utiliser le site web et les Services.</p>
+
+      <h3>3. Description des services</h3>
+      <p>La Société fournit des services d'intelligence artificielle aux entreprises, incluant mais sans s'y limiter : le déploiement d'agents vocaux automatisés, l'optimisation de la visibilité sur les moteurs de recherche génératifs, et l'installation de modèles de langage privés. Les caractéristiques précises de chaque service sont définies dans le contrat de service individuel conclu avec chaque Client.</p>
+
+      <h3>4. Obligations du Client</h3>
+      <p>Le Client s'engage à :</p>
+      <ul>
+        <li>Fournir des renseignements exacts et complets lors de l'inscription et pendant la durée du contrat.</li>
+        <li>Utiliser les Services conformément aux lois applicables et aux présentes Conditions.</li>
+        <li>Ne pas utiliser les Services à des fins illicites, frauduleuses ou portant atteinte aux droits de tiers.</li>
+        <li>Maintenir la confidentialité de ses identifiants d'accès.</li>
+        <li>S'assurer que son utilisation des Services respecte la législation applicable en matière de protection des renseignements personnels.</li>
+      </ul>
+
+      <h3>5. Propriété intellectuelle</h3>
+      <p>L'ensemble du contenu du site web (textes, graphiques, logos, images, logiciels) est la propriété de la Société ou de ses concédants de licence et est protégé par les lois canadiennes et internationales sur la propriété intellectuelle. Le Client conserve la propriété intégrale de ses données et documents fournis dans le cadre de l'utilisation des Services.</p>
+
+      <h3>6. Limitation de responsabilité</h3>
+      <p>Les Services sont fournis « tels quels ». La Société ne garantit pas que les Services seront exempts d'erreurs, d'interruptions ou de défauts. En aucun cas, la Société ne sera responsable des dommages indirects, accessoires, spéciaux, consécutifs ou punitifs, incluant la perte de profits, de données ou d'achalandage, résultant de l'utilisation ou de l'impossibilité d'utiliser les Services. La responsabilité totale de la Société est limitée au montant des frais versés par le Client au cours des douze (12) mois précédant la réclamation.</p>
+
+      <h3>7. Tarification et paiement</h3>
+      <p>Les tarifs des Services sont établis dans le contrat individuel de chaque Client. Sauf indication contraire, les frais sont facturés mensuellement et payables dans les trente (30) jours suivant la date de facturation. Tout retard de paiement peut entraîner la suspension des Services après un préavis écrit de quinze (15) jours.</p>
+
+      <h3>8. Durée et résiliation</h3>
+      <p>Le contrat de service prend effet à la date de signature et se poursuit pour la durée indiquée. Chaque partie peut résilier le contrat moyennant un préavis écrit de trente (30) jours. En cas de manquement grave par l'une des parties, l'autre partie peut résilier immédiatement par avis écrit, après mise en demeure restée sans effet pendant quinze (15) jours.</p>
+
+      <h3>9. Confidentialité</h3>
+      <p>Les parties s'engagent à maintenir confidentiels tous les renseignements échangés dans le cadre des Services, à l'exception des renseignements qui sont déjà publics ou doivent être divulgués en vertu d'une ordonnance judiciaire ou d'une exigence réglementaire.</p>
+
+      <h3>10. Droit applicable et juridiction</h3>
+      <p>Les présentes Conditions sont régies par les lois de la province de Québec et les lois fédérales du Canada qui y sont applicables. Tout différend sera soumis à la compétence exclusive des tribunaux du district judiciaire de Montréal.</p>
+
+      <h3>11. Modifications</h3>
+      <p>Nous nous réservons le droit de modifier les présentes Conditions à tout moment. Les modifications prennent effet dès leur publication sur le site web. L'utilisation continue des Services après la publication constitue votre acceptation des Conditions modifiées.</p>
+
+      <h3>12. Contact</h3>
+      <p>Pour toute question relative aux présentes Conditions :</p>
+      <p><strong>Marquis AI — Marquis Logiciels Inc.</strong><br>Montréal, QC, Canada<br>Courriel : info@marquisai.ca<br>Téléphone : 514 883-3756</p>
+    </div>
+  </section>
+</div>
+
+<!-- Footer -->
 <footer class="footer">
   <div class="container">
     <div class="footer-grid">
       <div>
         <h2 style="color: #fff; font-size: 1.8rem; margin-bottom: 1.5rem;">Marquis <span style="color: var(--accent);">AI</span></h2>
-        <p>Studio d'intelligence artificielle basé à Montréal. Nous construisons des systèmes efficaces pour les entreprises québécoises.</p>
+        <p data-i18n="footer.desc">Studio d'intelligence artificielle à Montréal. On construit des systèmes qui fonctionnent pour les entreprises d'ici.</p>
       </div>
       <div>
-        <h4>Produits</h4>
+        <h4 data-i18n="footer.products">Produits</h4>
         <ul>
-          <li><a href="#" data-page="voice">Agent Vocal IA</a></li>
-          <li><a href="#" data-page="geo">GEO</a></li>
-          <li><a href="#" data-page="llm">LLM Interne</a></li>
+          <li><a href="#" data-page="voice" data-i18n="footer.voice">Agent Vocal IA</a></li>
+          <li><a href="#" data-page="geo" data-i18n="footer.geo">GEO</a></li>
+          <li><a href="#" data-page="llm" data-i18n="footer.llm">LLM Interne</a></li>
         </ul>
       </div>
       <div>
-        <h4>Entreprise</h4>
+        <h4 data-i18n="footer.company">Entreprise</h4>
         <ul>
-          <li><a href="#" data-page="home">Accueil</a></li>
-          <li><a href="#" data-page="about">À propos</a></li>
-          <li><a href="#" data-page="contact">Contact</a></li>
+          <li><a href="#" data-page="home" data-i18n="footer.home">Accueil</a></li>
+          <li><a href="#" data-page="about" data-i18n="footer.about">À propos</a></li>
+          <li><a href="#" data-page="contact" data-i18n="footer.contact">Contact</a></li>
         </ul>
       </div>
       <div>
-        <h4>Légal</h4>
+        <h4 data-i18n="footer.legal">Juridique</h4>
         <ul>
-          <li><a href="#">Confidentialité</a></li>
-          <li><a href="#">Conditions</a></li>
+          <li><a href="#" data-page="privacy" data-i18n="footer.privacy">Confidentialité</a></li>
+          <li><a href="#" data-page="terms" data-i18n="footer.terms">Conditions d'utilisation</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 Marquis AI Inc. · Tous droits réservés</span>
-      <span>Conçu à Montréal</span>
+      <span data-i18n="footer.copy">© 2026 Marquis AI · Marquis Logiciels Inc. · Tous droits réservés</span>
+      <span data-i18n="footer.made">Conçu à Montréal</span>
     </div>
   </div>
 </footer>
 
-<!-- Router & Interactions -->
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const navTriggers = document.querySelectorAll('[data-page]');
-    const pages = document.querySelectorAll('.page');
-    const nav = document.getElementById('mainNav');
-    const navLinksContainer = document.getElementById('navLinksContainer');
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const dropdownToggle = document.getElementById('dropdownToggle');
-    const dropdownContainer = document.getElementById('dropdownContainer');
-    let currentPageId = 'home';
-
-    function navigateTo(pageId) {
-      if (pageId === currentPageId) return;
-      currentPageId = pageId;
-
-      const targetPage = document.getElementById('page-' + pageId);
-      if (!targetPage) return;
-
-      document.querySelectorAll('.nav-links > a').forEach(l => l.classList.remove('active'));
-      const activeLink = document.querySelector(`.nav-links > a[data-page="${pageId}"]`);
-      if (activeLink) activeLink.classList.add('active');
-
-      if (pageId === 'home' || pageId === 'about') { nav.classList.add('dark-mode'); } 
-      else { nav.classList.remove('dark-mode'); }
-
-      const activePage = document.querySelector('.page.visible');
-      if (activePage) {
-        activePage.classList.remove('visible');
-        setTimeout(() => {
-          pages.forEach(p => p.classList.remove('active'));
-          targetPage.classList.add('active');
-          void targetPage.offsetWidth; 
-          targetPage.classList.add('visible');
-          window.scrollTo({ top: 0, behavior: 'instant' });
-        }, 300);
-      } else {
-        pages.forEach(p => p.classList.remove('active'));
-        targetPage.classList.add('active');
-        void targetPage.offsetWidth;
-        targetPage.classList.add('visible');
-        window.scrollTo({ top: 0, behavior: 'instant' });
-      }
-    }
-
-    // Router click listener
-    navTriggers.forEach(trigger => {
-      trigger.addEventListener('click', (e) => {
-        e.preventDefault();
-        navigateTo(trigger.getAttribute('data-page'));
-        
-        // Close mobile menu if open
-        if (navLinksContainer.classList.contains('active')) {
-          navLinksContainer.classList.remove('active');
-          hamburgerBtn.classList.remove('open');
-          dropdownContainer.classList.remove('expanded');
-        }
-      });
-    });
-
-    // FAQ Accordion
-    document.querySelectorAll('.faq-question').forEach(button => {
-      button.addEventListener('click', () => {
-        const item = button.parentElement;
-        const answer = item.querySelector('.faq-answer');
-        const isActive = item.classList.contains('active');
-
-        // Close all in the same list
-        item.closest('.faq-list').querySelectorAll('.faq-item').forEach(i => {
-          i.classList.remove('active');
-          i.querySelector('.faq-answer').style.maxHeight = null;
-        });
-
-        // Open clicked if it wasn't active
-        if (!isActive) {
-          item.classList.add('active');
-          answer.style.maxHeight = answer.scrollHeight + "px";
-        }
-      });
-    });
-
-    // Mobile Menu Toggle
-    hamburgerBtn.addEventListener('click', () => {
-      navLinksContainer.classList.toggle('active');
-      hamburgerBtn.classList.toggle('open');
-      // Close dropdown when closing the main menu
-      if (!navLinksContainer.classList.contains('active')) {
-        dropdownContainer.classList.remove('expanded');
-      }
-    });
-
-    // Mobile Dropdown Toggle
-    dropdownToggle.addEventListener('click', (e) => {
-      if (window.innerWidth <= 900) {
-        e.preventDefault();
-        e.stopPropagation();
-        dropdownContainer.classList.toggle('expanded');
-      }
-    });
-
-    nav.classList.add('dark-mode');
-
-    // Form Handling with Email and SMS notifications
-    const form = document.getElementById('contactForm');
-    form.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const btn = document.getElementById('submitBtn');
-      const originalText = btn.innerText;
-      
-      btn.innerText = 'Envoi en cours...';
-      btn.disabled = true;
-      btn.style.opacity = '0.7';
-      btn.style.cursor = 'not-allowed';
-
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData);
-
-      try {
-        // 1. Envoi de l'email (via FormSubmit - service gratuit sans backend)
-        const emailResponse = await fetch('https://formsubmit.co/ajax/pierreoliviermarquis49@gmail.com', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify({
-            ...data,
-            _subject: "Nouveau message depuis le site Marquis AI"
-          })
-        });
-
-        if (!emailResponse.ok) throw new Error('Échec de l\'envoi email');
-
-        // 2. Envoi du SMS (Nécessite un webhook Zapier ou Make.com)
-        const smsWebhookUrl = 'https://hook.us1.make.com/VOTRE_WEBHOOK_URL_ICI'; // REMPLACEZ CECI
-        if (!smsWebhookUrl.includes('VOTRE_WEBHOOK_URL_ICI')) {
-          await fetch(smsWebhookUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              phone: "5148833756",
-              message: `Nouveau lead Marquis AI!\nNom: ${data.nom}\nEntreprise: ${data.entreprise}\nService: ${data.service}`
-            })
-          });
-        }
-
-        btn.innerText = '✓ Demande envoyée avec succès';
-        btn.style.background = '#16a34a';
-        btn.style.borderColor = '#16a34a';
-        btn.style.opacity = '1';
-        btn.style.cursor = 'default';
-        
-        setTimeout(() => {
-          btn.innerText = originalText;
-          btn.disabled = false;
-          btn.style.background = '';
-          btn.style.borderColor = '';
-          btn.style.opacity = '';
-          btn.style.cursor = '';
-          form.reset();
-        }, 3000);
-
-      } catch (error) {
-        console.error('Erreur:', error);
-        btn.innerText = 'Erreur, veuillez réessayer';
-        btn.style.background = '#dc2626';
-        btn.style.borderColor = '#dc2626';
-        setTimeout(() => {
-          btn.innerText = originalText;
-          btn.disabled = false;
-          btn.style.background = '';
-          btn.style.borderColor = '';
-          btn.style.opacity = '';
-          btn.style.cursor = '';
-        }, 3000);
-      }
-    });
-  });
-</script>
+<!-- App (ES module) -->
+<script type="module" src="js/app.js"></script>
 
 </body>
 </html>
